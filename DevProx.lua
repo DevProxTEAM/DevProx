@@ -2545,7 +2545,6 @@ DeleteMessage(msg.chat_id_,{[0] = msg.id_})
 end
 end
 end
-end
 --     Source DevProx     --
 if DevAbs:get(DevProx.."Abs:Set:Groups:Links"..msg.chat_id_..""..msg.sender_user_id_) then
 if text == "الغاء" then
@@ -5001,7 +5000,7 @@ end
 --     Source DevProx     --
 --          Ban           --
 if Admin(msg) then
-if text ==('حظر') and ChCheck(msg) then
+if text ==('حضر') or text ==('حظر') and ChCheck(msg) then
 function BanReply(extra, result, success)
 if not Constructor(msg) and DevAbs:get(DevProx.."Abs:Lock:KickBan"..msg.chat_id_) then 
 send(msg.chat_id_, msg.id_,'⌁︙لقد تم تعطيل الطرد والحظر من قبل المنشئين')
@@ -5029,8 +5028,8 @@ if tonumber(tonumber(msg.reply_to_message_id_)) == 0 then
 else
 getMessage(msg.chat_id_, tonumber(msg.reply_to_message_id_),BanReply)
 end end
-if text and text:match('^حظر @(.*)') and ChCheck(msg) then
-local username = text:match('^حظر @(.*)')
+if text and (text:match('^حضر @(.*)') or text:match('^حظر @(.*)')) and ChCheck(msg) then
+local username = text:match('^حضر @(.*)') or text:match('^حظر @(.*)')
 function BanUser(extra,result,success)
 if not Constructor(msg) and DevAbs:get(DevProx.."Abs:Lock:KickBan"..msg.chat_id_) then 
 send(msg.chat_id_, msg.id_,'⌁︙لقد تم تعطيل الطرد والحظر من قبل المنشئين')
@@ -5059,8 +5058,8 @@ Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙*المعرف غير صحيح*', 1, 'md
 end end 
 resolve_username(username,BanUser)
 end
-if text and text:match('^حظر (%d+)') and ChCheck(msg) then
-local user = text:match('حظر (%d+)')
+if text and (text:match('^حضر (%d+)') or text:match('^حظر (%d+)')) and ChCheck(msg) then
+local user = text:match('حضر (%d+)') or text:match('حظر (%d+)')
 if not Constructor(msg) and DevAbs:get(DevProx.."Abs:Lock:KickBan"..msg.chat_id_) then 
 send(msg.chat_id_, msg.id_,'⌁︙لقد تم تعطيل الطرد والحظر من قبل المنشئين')
 return false
@@ -5085,7 +5084,7 @@ end
 end
 --     Source DevProx     --
 --         UnBan          --
-if text ==('الغاء حظر') and ChCheck(msg) then
+if text ==('الغاء الحظر') or text ==('الغاء حظر') and ChCheck(msg) then
 function UnBanReply(extra, result, success)
 DevAbs:srem(DevProx..'Abs:Ban:'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ ID = "ChangeChatMemberStatus", chat_id_ = msg.chat_id_, user_id_ = result.sender_user_id_, status_ = { ID = "ChatMemberStatusLeft" },},function(arg,ban) end,nil)   
@@ -5095,8 +5094,8 @@ if tonumber(tonumber(msg.reply_to_message_id_)) == 0 then
 else
 getMessage(msg.chat_id_, tonumber(msg.reply_to_message_id_),UnBanReply)
 end end
-if text and text:match('^الغاء حظر @(.*)') and ChCheck(msg) then
-local username = text:match('^الغاء حظر @(.*)')
+if text and (text:match('^الغاء الحظر @(.*)') or text:match('^الغاء حظر @(.*)')) and ChCheck(msg) then
+local username = text:match('^الغاء الحظر @(.*)') or text:match('^الغاء حظر @(.*)')
 function UnBanUser(extra,result,success)
 if result.id_ then
 DevAbs:srem(DevProx..'Abs:Ban:'..msg.chat_id_, result.id_)
@@ -5107,8 +5106,8 @@ Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙*المعرف غير صحيح*', 1, 'md
 end end 
 resolve_username(username,UnBanUser)
 end
-if text and text:match('^الغاء حظر (%d+)') and ChCheck(msg) then
-local user = text:match('الغاء حظر (%d+)')
+if text and (text:match('^الغاء الحظر (%d+)') or text:match('^الغاء حظر (%d+)')) and ChCheck(msg) then
+local user = text:match('الغاء الحظر (%d+)') or text:match('الغاء حظر (%d+)')
 DevAbs:srem(DevProx..'Abs:Ban:'..msg.chat_id_, user)
 tdcli_function ({ ID = "ChangeChatMemberStatus", chat_id_ = msg.chat_id_, user_id_ = user, status_ = { ID = "ChatMemberStatusLeft" },},function(arg,ban) end,nil)   
 ReplyStatus(msg,user,"Reply","⌁︙تم الغاء حظره من المجموعه")  
@@ -5180,7 +5179,7 @@ end
 end
 --     Source DevProx     --
 --         UnMute         --
-if text ==('الغاء كتم') and ChCheck(msg) then
+if text ==('الغاء الكتم') or text ==('الغاء كتم') and ChCheck(msg) then
 function UnMuteReply(extra, result, success)
 if not DevAbs:sismember(DevProx..'Abs:Muted:'..msg.chat_id_, result.sender_user_id_) then
 ReplyStatus(msg,result.sender_user_id_,"Reply","⌁︙هو ليس مكتوم لالغاء كتمه")  
@@ -5193,8 +5192,8 @@ if tonumber(tonumber(msg.reply_to_message_id_)) == 0 then
 else
 getMessage(msg.chat_id_, tonumber(msg.reply_to_message_id_),UnMuteReply)
 end end
-if text and text:match('^الغاء كتم @(.*)') and ChCheck(msg) then
-local username = text:match('^الغاء كتم @(.*)')
+if text and (text:match('^الغاء الكتم @(.*)') or text:match('^الغاء كتم @(.*)')) and ChCheck(msg) then
+local username = text:match('^الغاء الكتم @(.*)') or text:match('^الغاء كتم @(.*)')
 function UnMuteUser(extra,result,success)
 if result.id_ then
 if not DevAbs:sismember(DevProx..'Abs:Muted:'..msg.chat_id_, result.id_) then
@@ -5208,8 +5207,8 @@ Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙*المعرف غير صحيح*', 1, 'md
 end end 
 resolve_username(username,UnMuteUser)
 end
-if text and text:match('^الغاء كتم (%d+)') and ChCheck(msg) then
-local user = text:match('الغاء كتم (%d+)')
+if text and (text:match('^الغاء الكتم (%d+)') or text:match('^الغاء كتم (%d+)')) and ChCheck(msg) then
+local user = text:match('الغاء الكتم (%d+)') or text:match('الغاء كتم (%d+)')
 if not DevAbs:sismember(DevProx..'Abs:Muted:'..msg.chat_id_, user) then
 ReplyStatus(msg,user,"Reply","⌁︙هو ليس مكتوم لالغاء كتمه")  
 else
@@ -5221,7 +5220,7 @@ end
 --     Source DevProx     --
 --          Tkeed           --
 if Admin(msg) then
-if text ==('تقيد') and ChCheck(msg) then
+if text ==('تقييد') or text ==('تقيد') and ChCheck(msg) then
 function TkeedReply(extra, result, success)
 if not Constructor(msg) and DevAbs:get(DevProx.."Abs:Lock:MuteTked"..msg.chat_id_) then 
 send(msg.chat_id_, msg.id_,'⌁︙لقد تم تعطيل الكتم والتقيد من قبل المنشئين')
@@ -5239,8 +5238,8 @@ if tonumber(tonumber(msg.reply_to_message_id_)) == 0 then
 else
 getMessage(msg.chat_id_, tonumber(msg.reply_to_message_id_),TkeedReply)
 end end
-if text and text:match('^تقيد @(.*)') and ChCheck(msg) then
-local username = text:match('^تقيد @(.*)')
+if text and (text:match('^تقييد @(.*)') or text:match('^تقيد @(.*)')) and ChCheck(msg) then
+local username = text:match('^تقييد @(.*)') or text:match('^تقيد @(.*)')
 function TkeedUser(extra,result,success)
 if not Constructor(msg) and DevAbs:get(DevProx.."Abs:Lock:MuteTked"..msg.chat_id_) then 
 send(msg.chat_id_, msg.id_,'⌁︙لقد تم تعطيل الكتم والتقيد من قبل المنشئين')
@@ -5259,8 +5258,8 @@ Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙*المعرف غير صحيح*', 1, 'md
 end end 
 resolve_username(username,TkeedUser)
 end
-if text and text:match('^تقيد (%d+)') and ChCheck(msg) then
-local user = text:match('تقيد (%d+)')
+if text and (text:match('^تقييد (%d+)') or text:match('^تقيد (%d+)')) and ChCheck(msg) then
+local user = text:match('تقييد (%d+)') or text:match('تقيد (%d+)')
 if not Constructor(msg) and DevAbs:get(DevProx.."Abs:Lock:MuteTked"..msg.chat_id_) then 
 send(msg.chat_id_, msg.id_,'⌁︙لقد تم تعطيل الكتم والتقيد من قبل المنشئين')
 return false
@@ -5275,7 +5274,7 @@ end
 end
 --     Source DevProx     --
 --         UnTkeed          --
-if text ==('الغاء تقيد') and ChCheck(msg) then
+if text ==('الغاء تقييد') or text ==('الغاء تقيد') and ChCheck(msg) then
 function UnTkeedReply(extra, result, success)
 HTTPS.request("https://api.telegram.org/bot"..TokenBot.."/restrictChatMember?chat_id="..msg.chat_id_.."&user_id="..result.sender_user_id_.."&can_send_messages=True&can_send_media_messages=True&can_send_other_messages=True&can_add_web_page_previews=True")
 DevAbs:srem(DevProx..'Abs:Tkeed:'..msg.chat_id_, result.sender_user_id_)
@@ -5285,8 +5284,8 @@ if tonumber(tonumber(msg.reply_to_message_id_)) == 0 then
 else
 getMessage(msg.chat_id_, tonumber(msg.reply_to_message_id_),UnTkeedReply)
 end end
-if text and text:match('^الغاء تقيد @(.*)') and ChCheck(msg) then
-local username = text:match('^الغاء تقيد @(.*)')
+if text and (text:match('^الغاء تقييد @(.*)') or text:match('^الغاء تقيد @(.*)')) and ChCheck(msg) then
+local username = text:match('^الغاء تقييد @(.*)') or text:match('^الغاء تقيد @(.*)')
 function UnTkeedUser(extra,result,success)
 if result.id_ then
 HTTPS.request("https://api.telegram.org/bot"..TokenBot.."/restrictChatMember?chat_id="..msg.chat_id_.."&user_id="..result.id_.."&can_send_messages=True&can_send_media_messages=True&can_send_other_messages=True&can_add_web_page_previews=True")
@@ -5297,8 +5296,8 @@ Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙*المعرف غير صحيح*', 1, 'md
 end end 
 resolve_username(username,UnTkeedUser)
 end
-if text and text:match('^الغاء تقيد (%d+)') and ChCheck(msg) then
-local user = text:match('الغاء تقيد (%d+)')
+if text and (text:match('^الغاء تقييد (%d+)') or text:match('^الغاء تقيد (%d+)')) and ChCheck(msg) then
+local user = text:match('الغاء تقييد (%d+)') or text:match('الغاء تقيد (%d+)')
 HTTPS.request("https://api.telegram.org/bot"..TokenBot.."/restrictChatMember?chat_id="..msg.chat_id_.."&user_id="..user.."&can_send_messages=True&can_send_media_messages=True&can_send_other_messages=True&can_add_web_page_previews=True")
 DevAbs:srem(DevProx..'Abs:Tkeed:'..msg.chat_id_, user)
 ReplyStatus(msg,user,"Reply","⌁︙تم الغاء تقيده من المجموعه")  
@@ -5308,7 +5307,7 @@ end
 --     Source DevProx     --
 --         BanAll         --
 if SecondSudo(msg) then
-if text ==('حظر عام') then
+if text ==('حضر عام') or text ==('حظر عام') then
 function BanAllReply(extra, result, success)
 if tonumber(result.sender_user_id_) == tonumber(DevProx) then  
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع حظر البوت عام*", 1, 'md')
@@ -5326,8 +5325,8 @@ if tonumber(tonumber(msg.reply_to_message_id_)) == 0 then
 else
 getMessage(msg.chat_id_, tonumber(msg.reply_to_message_id_),BanAllReply)
 end end
-if text and text:match('^حظر عام @(.*)') then
-local username = text:match('^حظر عام @(.*)')
+if text and (text:match('^حضر عام @(.*)') or text:match('^حظر عام @(.*)')) then
+local username = text:match('^حضر عام @(.*)') or text:match('^حظر عام @(.*)')
 function BanAllUser(extra,result,success)
 if tonumber(result.id_) == tonumber(DevProx) then  
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع حظر البوت عام*", 1, 'md')
@@ -5346,8 +5345,8 @@ Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙*المعرف غير صحيح*', 1, 'md
 end end 
 resolve_username(username,BanAllUser)
 end
-if text and text:match('^حظر عام (%d+)') then
-local user = text:match('حظر عام (%d+)')
+if text and (text:match('^حضر عام (%d+)') or text:match('^حظر عام (%d+)')) then
+local user = text:match('حضر عام (%d+)') or text:match('حظر عام (%d+)')
 if tonumber(user) == tonumber(DevProx) then  
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع حظر البوت عام*", 1, 'md')
 return false 
@@ -5413,7 +5412,7 @@ ReplyStatus(msg,user,"Reply","⌁︙تم كتمه عام من المجموعات
 end
 --     Source DevProx     --
 --         UnAll          --
-if text ==('الغاء العام') then
+if text ==('الغاء عام') or text ==('الغاء العام') then
 function UnAllReply(extra, result, success)
 DevAbs:srem(DevProx..'Abs:BanAll:', result.sender_user_id_)
 DevAbs:srem(DevProx..'Abs:MuteAll:', result.sender_user_id_)
@@ -5423,8 +5422,8 @@ if tonumber(tonumber(msg.reply_to_message_id_)) == 0 then
 else
 getMessage(msg.chat_id_, tonumber(msg.reply_to_message_id_),UnAllReply)
 end end
-if text and text:match('^الغاء العام @(.*)') then
-local username = text:match('^الغاء العام @(.*)')
+if text and (text:match('^الغاء عام @(.*)') or text:match('^الغاء العام @(.*)')) then
+local username = text:match('^الغاء عام @(.*)') or text:match('^الغاء العام @(.*)')
 function UnAllUser(extra,result,success)
 if result.id_ then
 DevAbs:srem(DevProx..'Abs:BanAll:', result.id_)
@@ -5435,11 +5434,12 @@ Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙*المعرف غير صحيح*', 1, 'md
 end end 
 resolve_username(username,UnAllUser)
 end
-if text and text:match('^الغاء العام (%d+)') then
-local user = text:match('الغاء العام (%d+)')
+if text and (text:match('^الغاء عام (%d+)') or text:match('^الغاء العام (%d+)')) then
+local user = text:match('الغاء عام (%d+)') or text:match('الغاء العام (%d+)')
 DevAbs:srem(DevProx..'Abs:BanAll:', user)
 DevAbs:srem(DevProx..'Abs:MuteAll:', user)
 ReplyStatus(msg,user,"Reply","⌁︙تم الغاء (الحظر • الكتم) عام من المجموعات")  
+end
 end
 end
 --     Source DevProx     --
