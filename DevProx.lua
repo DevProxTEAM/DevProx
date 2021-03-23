@@ -1618,6 +1618,11 @@ Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙لا تستطيع تفعيل هذه ا�
 end 
 end 
 --     Source DevProx     --
+if msg.date_ and msg.date_ < tonumber(os.time() - 30) then
+print("*( OLD MESSAGE )*")
+return false
+end
+--     Source DevProx     --
 tdcli_function({ID = "GetUser",user_id_ = msg.sender_user_id_},function(arg,data) 
 if data.username_ ~= false then
 DevAbs:set(DevProx..'Save:UserName'..msg.sender_user_id_,data.username_)
