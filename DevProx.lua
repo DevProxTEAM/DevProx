@@ -5305,6 +5305,10 @@ if SudoId(result.sender_user_id_) == true then
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع حظر المطور الاساسي*", 1, 'md')
 return false 
 end
+if DevAbs:sismember(DevProx..'Abs:SecondSudo:',result.sender_user_id_) and not Sudo(msg) then
+Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع حظر المطور الثانوي*", 1, 'md')
+return false 
+end
 ChatKick(result.chat_id_, result.sender_user_id_)
 DevAbs:sadd(DevProx..'Abs:BanAll:', result.sender_user_id_)
 ReplyStatus(msg,result.sender_user_id_,"Reply","⌁︙تم حظره عام من المجموعات")  
@@ -5322,6 +5326,10 @@ return false
 end
 if SudoId(result.id_) == true then
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع حظر المطور الاساسي*", 1, 'md')
+return false 
+end
+if DevAbs:sismember(DevProx..'Abs:SecondSudo:',result.id_) and not Sudo(msg) then
+Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع حظر المطور الثانوي*", 1, 'md')
 return false 
 end
 if result.id_ then
@@ -5343,6 +5351,10 @@ if SudoId(user) == true then
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع حظر المطور الاساسي*", 1, 'md')
 return false 
 end
+if DevAbs:sismember(DevProx..'Abs:SecondSudo:',user) and not Sudo(msg) then
+Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع حظر المطور الثانوي*", 1, 'md')
+return false 
+end
 ChatKick(msg.chat_id_, user)
 DevAbs:sadd(DevProx..'Abs:BanAll:', user)
 ReplyStatus(msg,user,"Reply","⌁︙تم حظره عام من المجموعات")  
@@ -5357,6 +5369,10 @@ return false
 end
 if SudoId(result.sender_user_id_) == true then
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع كتم المطور الاساسي*", 1, 'md')
+return false 
+end
+if DevAbs:sismember(DevProx..'Abs:SecondSudo:',result.sender_user_id_) and not Sudo(msg) then
+Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع كتم المطور الثانوي*", 1, 'md')
 return false 
 end
 DevAbs:sadd(DevProx..'Abs:MuteAll:', result.sender_user_id_)
@@ -5377,6 +5393,10 @@ if SudoId(result.id_) == true then
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع كتم المطور الاساسي*", 1, 'md')
 return false 
 end
+if DevAbs:sismember(DevProx..'Abs:SecondSudo:',result.id_) and not Sudo(msg) then
+Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع كتم المطور الثانوي*", 1, 'md')
+return false 
+end
 if result.id_ then
 DevAbs:sadd(DevProx..'Abs:MuteAll:', result.id_)
 ReplyStatus(msg,result.id_,"Reply","⌁︙تم كتمه عام من المجموعات")  
@@ -5393,6 +5413,10 @@ return false
 end
 if SudoId(user) == true then
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع كتم المطور الاساسي*", 1, 'md')
+return false 
+end
+if DevAbs:sismember(DevProx..'Abs:SecondSudo:',user) and not Sudo(msg) then
+Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع كتم المطور الثانوي*", 1, 'md')
 return false 
 end
 DevAbs:sadd(DevProx..'Abs:MuteAll:', user)
