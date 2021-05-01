@@ -4,20 +4,25 @@
 --                - DevProx -                 --
 --        -- https://t.me/Dev_Prox --         --
 ------------------------------------------------ 
-list = io.popen("ls libs")
-if not list then
+LibsNumber = 0
+for v in io.popen('ls libs'):lines() do
+if v:match(".lua$") then
+LibsNumber = LibsNumber + 1
+end
+end
+if LibsNumber ~= 0 then
+URL = dofile("./libs/url.lua")
+json = dofile("./libs/JSON.lua")
+JSON = dofile("./libs/dkjson.lua")
+serpent = dofile("./libs/serpent.lua")
+DevAbs = dofile("./libs/redis.lua").connect("127.0.0.1", 6379)
+else 
 redis = require('redis') 
 URL = require('socket.url') 
 serpent = require("serpent") 
 json = dofile('./JSON.lua') 
 JSON = dofile('./dkjson.lua') 
 DevAbs = redis.connect('127.0.0.1', 6379)
-else 
-URL = dofile("./libs/url.lua")
-json = dofile("./libs/JSON.lua")
-JSON = dofile("./libs/dkjson.lua")
-serpent = dofile("./libs/serpent.lua")
-DevAbs = dofile("./libs/redis.lua").connect("127.0.0.1", 6379)
 end
 HTTPS = require ("ssl.https") 
 https = require ("ssl.https") 
@@ -9573,6 +9578,7 @@ if msg and not DevAbs:get(DevProx..'Abs:Update') then
 DevAbs:set(DevProx..'Abs:Update',true)
 os.execute('unlink JSON.lua && unlink dkjson.lua')
 os.execute('git clone https://github.com/DevProxTEAM/libs') 
+dofile('DevProx.lua') 
 end
 --     Source DevProx     --
 if text == 'الملفات' then
