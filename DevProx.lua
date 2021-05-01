@@ -5,7 +5,7 @@
 --        -- https://t.me/Dev_Prox --         --
 ------------------------------------------------ 
 list = io.popen("ls libs")
-if list then
+if not list then
 redis = require('redis') 
 URL = require('socket.url') 
 serpent = require("serpent") 
