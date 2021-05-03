@@ -2171,14 +2171,14 @@ return
 end
 function get_welcome(extra,result,success)
 if DevAbs:get(DevProx..'Abs:Groups:Welcomes'..msg.chat_id_) then
-text = DevAbs:get(DevProx..'Abs:Groups:Welcomes'..msg.chat_id_)
+Welcomes = DevAbs:get(DevProx..'Abs:Groups:Welcomes'..msg.chat_id_)
 else
-text = '• نورت حبي \n• [firstname lastname] \n• [@username]'
+Welcomes = '• نورت حبي \n• firstname \n• @username'
 end
-local text = text:gsub('firstname',(result.first_name_ or ''))
-local text = text:gsub('lastname',(result.last_name_ or ''))
-local text = text:gsub('username',(result.username_ or 'Dev_Prox'))
-Dev_Abs(msg.chat_id_, msg.id_, 1, text, 1, 'md')
+local Welcomes = Welcomes:gsub('"',"") Welcomes = Welcomes:gsub("'","") Welcomes = Welcomes:gsub(",","") Welcomes = Welcomes:gsub("*","") Welcomes = Welcomes:gsub(";","") Welcomes = Welcomes:gsub("`","") Welcomes = Welcomes:gsub("{","") Welcomes = Welcomes:gsub("}","") 
+local Welcomes = Welcomes:gsub('firstname',('['..result.first_name_..']' or ''))
+local Welcomes = Welcomes:gsub('username',('[@'..result.username_..']' or '[@Dev_Prox]'))
+Dev_Abs(msg.chat_id_, msg.id_, 1, Welcomes, 1, 'md')
 end 
 if DevAbs:get(DevProx.."Abs:Lock:Welcome"..msg.chat_id_) then
 getUser(msg.sender_user_id_,get_welcome)
@@ -2223,14 +2223,14 @@ return false
 end
 if DevAbs:get(DevProx.."Abs:Lock:Welcome"..msg.chat_id_) then
 if DevAbs:get(DevProx..'Abs:Groups:Welcomes'..msg.chat_id_) then
-text = DevAbs:get(DevProx..'Abs:Groups:Welcomes'..msg.chat_id_)
+Welcomes = DevAbs:get(DevProx..'Abs:Groups:Welcomes'..msg.chat_id_)
 else
-text = '• نورت حبي \n• [firstname lastname] \n• [@username]'
+Welcomes = '• نورت حبي \n• firstname \n• @username'
 end
-local text = text:gsub('firstname',(msg.content_.members_[0].first_name_ or ''))
-local text = text:gsub('lastname',(msg.content_.members_[0].last_name_ or ''))
-local text = text:gsub('username',(msg.content_.members_[0].username_ or 'Dev_Prox'))
-Dev_Abs(msg.chat_id_, msg.id_, 1, text, 1, 'md')
+local Welcomes = Welcomes:gsub('"',"") Welcomes = Welcomes:gsub("'","") Welcomes = Welcomes:gsub(",","") Welcomes = Welcomes:gsub("*","") Welcomes = Welcomes:gsub(";","") Welcomes = Welcomes:gsub("`","") Welcomes = Welcomes:gsub("{","") Welcomes = Welcomes:gsub("}","") 
+local Welcomes = Welcomes:gsub('firstname',('['..msg.content_.members_[0].first_name_..']' or ''))
+local Welcomes = Welcomes:gsub('username',('[@'..msg.content_.members_[0].username_..']' or '[@Dev_Prox]'))
+Dev_Abs(msg.chat_id_, msg.id_, 1, Welcomes, 1, 'md')
 end
 --     Source DevProx     --
 --        Contact         --
@@ -2629,6 +2629,7 @@ local GetJson = '{"BotId": '..DevProx..',"BotName": "'..BotName..'","GroupsList"
 for k,v in pairs(List) do 
 LinkGroups = DevAbs:get(DevProx.."Abs:Groups:Links"..v)
 Welcomes = DevAbs:get(DevProx..'Abs:Groups:Welcomes'..v) or ''
+Welcomes = Welcomes:gsub('"',"") Welcomes = Welcomes:gsub("'","") Welcomes = Welcomes:gsub(",","") Welcomes = Welcomes:gsub("*","") Welcomes = Welcomes:gsub(";","") Welcomes = Welcomes:gsub("`","") Welcomes = Welcomes:gsub("{","") Welcomes = Welcomes:gsub("}","") 
 AbsConstructors = DevAbs:smembers(DevProx..'Abs:AbsConstructor:'..v)
 Constructors = DevAbs:smembers(DevProx..'Abs:BasicConstructor:'..v)
 BasicConstructors = DevAbs:smembers(DevProx..'Abs:Constructor:'..v)
@@ -6780,9 +6781,10 @@ ReplyStatus(msg,msg.sender_user_id_,"ReplyBy","⌁︙تم حذف الترحيب"
 DevAbs:del(DevProx..'Abs:Groups:Welcomes'..msg.chat_id_)
 end
 if text and text:match("^جلب الترحيب$") and ChCheck(msg) or text and text:match("^جلب ترحيب$") and ChCheck(msg) or text and text:match("^الترحيب$") and ChCheck(msg) then
-local wel = DevAbs:get(DevProx..'Abs:Groups:Welcomes'..msg.chat_id_)
-if wel then
-Dev_Abs(msg.chat_id_, msg.id_, 1, wel, 1, 'md')
+local Welcomes = DevAbs:get(DevProx..'Abs:Groups:Welcomes'..msg.chat_id_)
+local Welcomes = Welcomes:gsub('"',"") local Welcomes = Welcomes:gsub("'","") local Welcomes = Welcomes:gsub(",","") local Welcomes = Welcomes:gsub("*","") local Welcomes = Welcomes:gsub(";","") local Welcomes = Welcomes:gsub("`","") local Welcomes = Welcomes:gsub("{","") local Welcomes = Welcomes:gsub("}","") 
+if Welcomes then
+Dev_Abs(msg.chat_id_, msg.id_, 1, Welcomes, 1, 'md')
 else
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙لم يتم وضع الترحيب \n⌁︙ارسل ↫ ضع ترحيب للحفظ ', 1, 'md')
 end
