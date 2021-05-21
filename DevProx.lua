@@ -5366,7 +5366,7 @@ if tonumber(user) == tonumber(DevProx) then
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع حظر البوت عام*", 1, 'md')
 return false 
 end
-if SudoId(user) == true then
+if SudoId(tonumber(user)) == true then
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع حظر المطور الاساسي*", 1, 'md')
 return false 
 end
@@ -5430,7 +5430,7 @@ if tonumber(user) == tonumber(DevProx) then
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع كتم البوت عام*", 1, 'md')
 return false 
 end
-if SudoId(user) == true then
+if SudoId(tonumber(user)) == true then
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع كتم المطور الاساسي*", 1, 'md')
 return false 
 end
