@@ -1071,7 +1071,7 @@ DevAbs:set(DevProx.."Set:Cmd:Group:New1"..msg.chat_id_..":تعط","تعطيل ا
 DevAbs:sadd(DevProx.."List:Cmd:Group:New"..msg.chat_id_,"تعط")
 DevAbs:set(DevProx.."Set:Cmd:Group:New1"..msg.chat_id_..":تفع","تفعيل الايدي بالصوره")
 DevAbs:sadd(DevProx.."List:Cmd:Group:New"..msg.chat_id_,"تفع")
-send(msg.chat_id_, msg.id_,"⌁︙تم ترتيب الاوامر بالشكل التالي ↫ ⤈\n- ايدي - ا .\n- مميز - م .\n- ادمن - اد .\n- مدير - مد . \n- منشئ - من . \n- المنشئ الاساسي - اس  . \n- تعطيل الايدي بالصوره - تعط .\n- تفعيل الايدي بالصوره - تفع .")  
+send(msg.chat_id_, msg.id_,"⌁︙تم ترتيب الاوامر بالشكل التالي ↫ ⤈\n- ايدي - ا .\n- رفع مميز - م .\n- رفع ادمن - اد  .\n- رفع مدير - مد . \n- رفع منشئ - من . \n- رفع منشئ اساسي - اس  . \n- تعطيل الايدي بالصوره - تعط .\n- تفعيل الايدي بالصوره - تفع .")  
 end
 if text == "اضف امر" or text == "اضافة امر" or text == "اضافه امر" and ChCheck(msg) then
 DevAbs:set(DevProx.."Set:Cmd:Group"..msg.chat_id_..":"..msg.sender_user_id_,"true") 
