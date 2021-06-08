@@ -1054,6 +1054,25 @@ DevAbs:del(DevProx.."List:Cmd:Group:New"..msg.chat_id_)
 end
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙تم حذف الاوامر المضافه في المجموعه", 1, 'html')
 end
+if text == "ترتيب الاوامر" then
+DevAbs:set(DevProx.."Set:Cmd:Group:New1"..msg.chat_id_..":ا","ايدي")
+DevAbs:sadd(DevProx.."List:Cmd:Group:New"..msg.chat_id_,"ا")
+DevAbs:set(DevProx.."Set:Cmd:Group:New1"..msg.chat_id_..":م","رفع مميز")
+DevAbs:sadd(DevProx.."List:Cmd:Group:New"..msg.chat_id_,"م")
+DevAbs:set(DevProx.."Set:Cmd:Group:New1"..msg.chat_id_..":اد","رفع ادمن")
+DevAbs:sadd(DevProx.."List:Cmd:Group:New"..msg.chat_id_,"اد")
+DevAbs:set(DevProx.."Set:Cmd:Group:New1"..msg.chat_id_..":مد","رفع مدير")
+DevAbs:sadd(DevProx.."List:Cmd:Group:New"..msg.chat_id_,"مد")
+DevAbs:set(DevProx.."Set:Cmd:Group:New1"..msg.chat_id_..":من","رفع منشئ")
+DevAbs:sadd(DevProx.."List:Cmd:Group:New"..msg.chat_id_,"من")
+DevAbs:set(DevProx.."Set:Cmd:Group:New1"..msg.chat_id_..":اس","رفع منشئ اساسي")
+DevAbs:sadd(DevProx.."List:Cmd:Group:New"..msg.chat_id_,"اس")
+DevAbs:set(DevProx.."Set:Cmd:Group:New1"..msg.chat_id_..":تعط","تعطيل الايدي بالصوره")
+DevAbs:sadd(DevProx.."List:Cmd:Group:New"..msg.chat_id_,"تعط")
+DevAbs:set(DevProx.."Set:Cmd:Group:New1"..msg.chat_id_..":تفع","تفعيل الايدي بالصوره")
+DevAbs:sadd(DevProx.."List:Cmd:Group:New"..msg.chat_id_,"تفع")
+send(msg.chat_id_, msg.id_,"⌁︙تم ترتيب الاوامر بالشكل التالي ↫ ⤈\n- ايدي - ا .\n- مميز - م .\n- ادمن - اد .\n- مدير - مد . \n- منشئ - من . \n- المنشئ الاساسي - اس  . \n- تعطيل الايدي بالصوره - تعط .\n- تفعيل الايدي بالصوره - تفع .")  
+end
 if text == "اضف امر" or text == "اضافة امر" or text == "اضافه امر" and ChCheck(msg) then
 DevAbs:set(DevProx.."Set:Cmd:Group"..msg.chat_id_..":"..msg.sender_user_id_,"true") 
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙ارسل الامر القديم", 1, 'html')
@@ -9407,6 +9426,7 @@ local text =  [[
 ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉
 ⌁︙تنزيل الكل
 ⌁︙الميديا • امسح
+⌁︙ترتيب الاوامر
 ⌁︙اضف • حذف ↫ امر
 ⌁︙حذف الاوامر المضافه
 ⌁︙الاوامر المضافه
