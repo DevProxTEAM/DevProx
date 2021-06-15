@@ -7101,12 +7101,13 @@ end
 SendText(msg.chat_id_,"⌁︙تم حذف "..Del.." من الميديا تلقائيا",0,'md') 
 DevAbs:del(DevProx.."Abs:cleaner"..msg.chat_id_)
 end 
+end 
 if Cleaner(msg) then
 if DevAbs:get(DevProx..'Abs:Lock:Clean'..msg.chat_id_) then 
 if text == "الميديا" and ChCheck(msg) or text == "عدد الميديا" and ChCheck(msg) then 
 local M = DevAbs:scard(DevProx.."Abs:cleaner"..msg.chat_id_)
 if M ~= 0 then
-Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙عدد الميديا ↫ "..M.."\n⌁︙عدد الحذف التلقائي ↫ "..(DevAbs:get(DevProx..'Abs:CleanNum'..msg.chat_id_) or 200), 1, 'md') 
+Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙عدد الميديا ↫ "..M.."\n⌁︙الحذف التلقائي ↫ "..(DevAbs:get(DevProx..'Abs:CleanNum'..msg.chat_id_) or 200), 1, 'md') 
 else
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙لاتوجد ميديا هنا", 1, 'md') 
 end end
