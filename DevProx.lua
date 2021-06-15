@@ -7083,12 +7083,12 @@ end
 if text and (text:match("^تعين عدد المسح (%d+)$") or text:match("^تعيين عدد المسح (%d+)$") or text:match("^تعين عدد الحذف (%d+)$") or text:match("^تعيين عدد الحذف (%d+)$")) and Constructor(msg) then   
 local Num = text:match("تعين عدد المسح (%d+)$") or text:match("تعيين عدد المسح (%d+)$") or text:match("تعين عدد الحذف (%d+)$") or text:match("تعيين عدد الحذف (%d+)$")
 if tonumber(Num) < 50 or tonumber(Num) > 200 then
-Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙قم بتحديد عدد اكبر من 50 واصغر من 200 للمسح التلقائي', 1, 'md')
+Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙قم بتحديد عدد اكبر من 50 واصغر من 200 للحذف التلقائي', 1, 'md')
 else
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙تم وضع ↫ *'..Num..'* من الميديا للحذف التلقائي', 1, 'md')
-DevAbs:set(DevProx..'Abs:CleanNum',Num) 
+DevAbs:set(DevProx..'Abs:CleanNum'..msg.chat_id_,Num) 
 end
-if msg and DevAbs:get(DevProx..'Abs:Lock:Clean'..msg.chat_id_) and DevAbs:scard(DevProx.."Abs:cleaner"..msg.chat_id_) >= tonumber(DevAbs:get(DevProx..'Abs:CleanNum') or 200) then 
+if msg and DevAbs:get(DevProx..'Abs:Lock:Clean'..msg.chat_id_) and DevAbs:scard(DevProx.."Abs:cleaner"..msg.chat_id_) >= tonumber(DevAbs:get(DevProx..'Abs:CleanNum'..msg.chat_id_) or 200) then 
 local List = DevAbs:smembers(DevProx.."Abs:cleaner"..msg.chat_id_)
 local Del = 0
 for k,v in pairs(List) do
@@ -7105,11 +7105,11 @@ if DevAbs:get(DevProx..'Abs:Lock:Clean'..msg.chat_id_) then
 if text == "الميديا" and ChCheck(msg) or text == "عدد الميديا" and ChCheck(msg) then 
 local M = DevAbs:scard(DevProx.."Abs:cleaner"..msg.chat_id_)
 if M ~= 0 then
-Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙عدد الميديا ↫ "..M.."\n⌁︙عدد الحذف التلقائي ↫ "..(DevAbs:get(DevProx..'Abs:CleanNum') or 200), 1, 'md') 
+Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙عدد الميديا ↫ "..M.."\n⌁︙عدد الحذف التلقائي ↫ "..(DevAbs:get(DevProx..'Abs:CleanNum'..msg.chat_id_) or 200), 1, 'md') 
 else
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙لاتوجد ميديا هنا", 1, 'md') 
 end end
-if text == "امسح" and ChCheck(msg) or text == "تنظيف ميديا" and ChCheck(msg) or text == "تنظيف الميديا" and ChCheck(msg) then
+if text == "امسح" and ChCheck(msg) or text == "احذف" and ChCheck(msg) or text == "تنظيف ميديا" and ChCheck(msg) or text == "تنظيف الميديا" and ChCheck(msg) then
 local List = DevAbs:smembers(DevProx.."Abs:cleaner"..msg.chat_id_)
 local Del = 0
 for k,v in pairs(List) do
