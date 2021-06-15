@@ -614,8 +614,8 @@ vardump(data)
 end ,nil) 
 end
 --     Source DevProx     --
-local AbsRank = function(msg) if SudoId(msg.sender_user_id_) then DevProxTEAM  = "المطور" elseif SecondSudo(msg) then DevProxTEAM = "المطور" elseif SudoBot(msg) then DevProxTEAM = "المطور" elseif ManagerAll(msg) then DevProxTEAM = "المدير" elseif AdminAll(msg) then DevProxTEAM = "الادمن" elseif AbsConstructor(msg) then DevProxTEAM = "المنشئ" elseif BasicConstructor(msg) then DevProxTEAM = "المنشئ" elseif Constructor(msg) then DevProxTEAM = "المنشئ" elseif Manager(msg) then DevProxTEAM = "المدير" elseif Admin(msg) then DevProxTEAM = "الادمن" else DevProxTEAM = "العضو" end return DevProxTEAM end
-function IdRank(user_id,chat_id) if tonumber(user_id) == tonumber(218385683) then DevProxTEAM = 'مبرمج السورس' elseif tonumber(user_id) == tonumber(DevProx) then DevProxTEAM = 'البوت' elseif SudoId(user_id) then DevProxTEAM = 'المطور الاساسي' elseif DevAbs:sismember(DevProx..'Abs:SecondSudo:', user_id) then DevProxTEAM = 'المطور الثانوي' elseif DevAbs:sismember(DevProx..'Abs:SudoBot:', user_id) then DevProxTEAM = DevAbs:get(DevProx.."Abs:SudoBot:Rd"..chat_id) or 'المطور' elseif DevAbs:sismember(DevProx..'Abs:ManagerAll:', user_id) then DevProxTEAM = DevAbs:get(DevProx.."Abs:Managers:Rd"..chat_id) or 'المدير العام' elseif DevAbs:sismember(DevProx..'Abs:AdminAll:', user_id) then DevProxTEAM = DevAbs:get(DevProx.."Abs:Admins:Rd"..chat_id) or 'الادمن العام' elseif DevAbs:sismember(DevProx..'Abs:VipAll:', user_id) then DevProxTEAM = DevAbs:get(DevProx.."Abs:VipMem:Rd"..chat_id) or 'المميز العام' elseif DevAbs:sismember(DevProx..'Abs:AbsConstructor:'..chat_id, user_id) then DevProxTEAM = 'منشئ المجموعه' elseif DevAbs:sismember(DevProx..'Abs:BasicConstructor:'..chat_id, user_id) then DevProxTEAM = DevAbs:get(DevProx.."Abs:BasicConstructor:Rd"..chat_id) or 'المنشئ الاساسي' elseif DevAbs:sismember(DevProx..'Abs:Constructor:'..chat_id, user_id) then DevProxTEAM = DevAbs:get(DevProx.."Abs:Constructor:Rd"..chat_id) or 'المنشئ' elseif DevAbs:sismember(DevProx..'Abs:Managers:'..chat_id, user_id) then DevProxTEAM = DevAbs:get(DevProx.."Abs:Managers:Rd"..chat_id) or 'المدير' elseif DevAbs:sismember(DevProx..'Abs:Admins:'..chat_id, user_id) then DevProxTEAM = DevAbs:get(DevProx.."Abs:Admins:Rd"..chat_id) or 'الادمن' elseif DevAbs:sismember(DevProx..'Abs:VipMem:'..chat_id, user_id) then  DevProxTEAM = DevAbs:get(DevProx.."Abs:VipMem:Rd"..chat_id) or 'المميز' elseif DevAbs:sismember(DevProx..'Abs:Cleaner:'..chat_id, user_id) then  DevProxTEAM = DevAbs:get(DevProx.."Abs:Cleaner:Rd"..chat_id) or 'المنظف' else DevProxTEAM = DevAbs:get(DevProx.."Abs:mem:Rd"..chat_id) or 'العضو' end return DevProxTEAM end
+local AbsRank = function(msg) if SudoId(msg.sender_user_id_) then DevProxTEAM  = "المطور" elseif SecondSudo(msg) then DevProxTEAM = "المطور" elseif SudoBot(msg) then DevProxTEAM = "المطور" elseif ManagerAll(msg) then DevProxTEAM = "المدير" elseif AdminAll(msg) then DevProxTEAM = "الادمن" elseif AbsConstructor(msg) then DevProxTEAM = "المالك" elseif BasicConstructor(msg) then DevProxTEAM = "المنشئ" elseif Constructor(msg) then DevProxTEAM = "المنشئ" elseif Manager(msg) then DevProxTEAM = "المدير" elseif Admin(msg) then DevProxTEAM = "الادمن" else DevProxTEAM = "العضو" end return DevProxTEAM end
+function IdRank(user_id,chat_id) if tonumber(user_id) == tonumber(218385683) then DevProxTEAM = 'مبرمج السورس' elseif tonumber(user_id) == tonumber(DevProx) then DevProxTEAM = 'البوت' elseif SudoId(user_id) then DevProxTEAM = 'المطور الاساسي' elseif DevAbs:sismember(DevProx..'Abs:SecondSudo:', user_id) then DevProxTEAM = 'المطور الثانوي' elseif DevAbs:sismember(DevProx..'Abs:SudoBot:', user_id) then DevProxTEAM = DevAbs:get(DevProx.."Abs:SudoBot:Rd"..chat_id) or 'المطور' elseif DevAbs:sismember(DevProx..'Abs:ManagerAll:', user_id) then DevProxTEAM = DevAbs:get(DevProx.."Abs:Managers:Rd"..chat_id) or 'المدير العام' elseif DevAbs:sismember(DevProx..'Abs:AdminAll:', user_id) then DevProxTEAM = DevAbs:get(DevProx.."Abs:Admins:Rd"..chat_id) or 'الادمن العام' elseif DevAbs:sismember(DevProx..'Abs:VipAll:', user_id) then DevProxTEAM = DevAbs:get(DevProx.."Abs:VipMem:Rd"..chat_id) or 'المميز العام' elseif DevAbs:sismember(DevProx..'Abs:AbsConstructor:'..chat_id, user_id) then DevProxTEAM = 'المالك' elseif DevAbs:sismember(DevProx..'Abs:BasicConstructor:'..chat_id, user_id) then DevProxTEAM = DevAbs:get(DevProx.."Abs:BasicConstructor:Rd"..chat_id) or 'المنشئ الاساسي' elseif DevAbs:sismember(DevProx..'Abs:Constructor:'..chat_id, user_id) then DevProxTEAM = DevAbs:get(DevProx.."Abs:Constructor:Rd"..chat_id) or 'المنشئ' elseif DevAbs:sismember(DevProx..'Abs:Managers:'..chat_id, user_id) then DevProxTEAM = DevAbs:get(DevProx.."Abs:Managers:Rd"..chat_id) or 'المدير' elseif DevAbs:sismember(DevProx..'Abs:Admins:'..chat_id, user_id) then DevProxTEAM = DevAbs:get(DevProx.."Abs:Admins:Rd"..chat_id) or 'الادمن' elseif DevAbs:sismember(DevProx..'Abs:VipMem:'..chat_id, user_id) then  DevProxTEAM = DevAbs:get(DevProx.."Abs:VipMem:Rd"..chat_id) or 'المميز' elseif DevAbs:sismember(DevProx..'Abs:Cleaner:'..chat_id, user_id) then  DevProxTEAM = DevAbs:get(DevProx.."Abs:Cleaner:Rd"..chat_id) or 'المنظف' else DevProxTEAM = DevAbs:get(DevProx.."Abs:mem:Rd"..chat_id) or 'العضو' end return DevProxTEAM end
 --     Source DevProx     --
 function RankChecking(user_id,chat_id)
 if SudoId(user_id) then
@@ -3579,9 +3579,9 @@ DevAbs:sadd(DevProx..'Abs:AbsConstructor:'..msg.chat_id_,Manager_id)
 end  
 end  
 if num == 0 then
-Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙لا يوجد ادمنيه ليتم رفعهم\n⌁︙تم رفع منشئ المجموعه", 1, 'md')
+Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙لا يوجد ادمنيه ليتم رفعهم\n⌁︙تم رفع مالك المجموعه", 1, 'md')
 else
-Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙تم رفع '..num..' من الادمنيه \n⌁︙تم رفع منشئ المجموعه', 1, 'md')
+Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙تم رفع '..num..' من الادمنيه \n⌁︙تم رفع مالك المجموعه', 1, 'md')
 end
 end,nil) 
 end
@@ -4596,7 +4596,7 @@ DevAbs:srem(DevProx..'Abs:BasicConstructor:'..msg.chat_id_,user)
 ReplyStatus(msg,user,"Reply","⌁︙تم تنزيله منشئ اساسي")  
 end end
 if text ==('رفع منشئ اساسي') and not AbsConstructor(msg) then
-Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙هذا الامر لمنشئ المجموعه والمطورين فقط', 1, 'md')
+Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙هذا الامر للمالكين والمطورين فقط', 1, 'md')
 end
 --     Source DevProx     --
 --    Set  Constructor    --
@@ -5875,7 +5875,7 @@ Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙حساب المنشئ محذوف", 1, "
 return false  
 end
 local UserName = (dp.username_ or "Dev_Prox")
-Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙منشئ المجموعه ↫ ["..dp.first_name_.."](T.me/"..UserName..")", 1, "md")  
+Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙مالك المجموعه ↫ ["..dp.first_name_.."](T.me/"..UserName..")", 1, "md")  
 end,nil)   
 end
 end
@@ -6092,7 +6092,7 @@ Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙حساب المنشئ محذوف", 1, "
 return false  
 end
 local UserName = (dp.username_ or "Dev_Prox")
-Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙تم رفع منشئ المجموعه ↫ ["..dp.first_name_.."](T.me/"..UserName..")", 1, "md") 
+Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙تم رفع مالك المجموعه ↫ ["..dp.first_name_.."](T.me/"..UserName..")", 1, "md") 
 DevAbs:sadd(DevProx.."Abs:AbsConstructor:"..msg.chat_id_,dp.id_)
 end,nil)   
 end,nil)   
@@ -7898,7 +7898,7 @@ end end
 --     Source DevProx     --
 if text and text:match("^حذف جميع الرتب$") and ChCheck(msg) or text and text:match("^مسح جميع الرتب$") and ChCheck(msg) or text and text:match("^تنزيل جميع الرتب$") and ChCheck(msg) then
 if not AbsConstructor(msg) then
-Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙لمنشئ المجموعه فقط', 1, 'md')
+Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙للمالكين فقط', 1, 'md')
 else
 local basicconstructor = DevAbs:smembers(DevProx..'Abs:BasicConstructor:'..msg.chat_id_)
 local constructor = DevAbs:smembers(DevProx..'Abs:Constructor:'..msg.chat_id_)
@@ -9562,7 +9562,7 @@ local text =  [[
 ⌁︙رفع بكل الصلاحيات
 ⌁︙حذف القوائم
 ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉
-⌁︙اوامر منشئ المجموعه ↫ ⤈
+⌁︙اوامر المالكين ↫ ⤈
 ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉
 ⌁︙رفع • تنزيل ↫ منشئ اساسي
 ⌁︙حذف المنشئين الاساسيين 
