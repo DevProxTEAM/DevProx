@@ -7088,7 +7088,9 @@ else
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙تم وضع ↫ *'..Num..'* من الميديا للحذف التلقائي', 1, 'md')
 DevAbs:set(DevProx..'Abs:CleanNum'..msg.chat_id_,Num) 
 end end 
-if msg and DevAbs:get(DevProx..'Abs:Lock:Clean'..msg.chat_id_) and DevAbs:scard(DevProx.."Abs:cleaner"..msg.chat_id_) >= tonumber(DevAbs:get(DevProx..'Abs:CleanNum'..msg.chat_id_) or 200) then 
+if msg and DevAbs:get(DevProx..'Abs:Lock:Clean'..msg.chat_id_) then
+if DevAbs:get(DevProx..'Abs:CleanNum'..msg.chat_id_) then CleanNum = DevAbs:get(DevProx..'Abs:CleanNum'..msg.chat_id_) else CleanNum = 200 end
+if DevAbs:scard(DevProx.."Abs:cleaner"..msg.chat_id_) >= tonumber(CleanNum) then 
 local List = DevAbs:smembers(DevProx.."Abs:cleaner"..msg.chat_id_)
 local Del = 0
 for k,v in pairs(List) do
