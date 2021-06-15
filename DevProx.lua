@@ -4494,12 +4494,12 @@ local admins = data.members_
 for i=0 , #admins do
 if data.members_[i].status_.ID == "ChatMemberStatusCreator" then
 if tonumber(result.sender_user_id_) == tonumber(admins[i].user_id_) then  
-ReplyStatus(msg,result.sender_user_id_,"Reply","⌁︙لا يمكن تنزيل المالك الاساسي") 
-return false
-end end end
-end,nil)
+Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙لا يمكن تنزيل المالك الاساسي', 1, 'md')
+else
 DevAbs:srem(DevProx..'Abs:AbsConstructor:'..msg.chat_id_,result.sender_user_id_)
 ReplyStatus(msg,result.sender_user_id_,"Reply","⌁︙تم تنزيله من المالكين")  
+end end end
+end,nil)
 end 
 if tonumber(tonumber(msg.reply_to_message_id_)) == 0 then
 else
@@ -4515,12 +4515,12 @@ local admins = data.members_
 for i=0 , #admins do
 if data.members_[i].status_.ID == "ChatMemberStatusCreator" then
 if tonumber(result.id_) == tonumber(admins[i].user_id_) then  
-ReplyStatus(msg,result.id_,"Reply","⌁︙لا يمكن تنزيل المالك الاساسي") 
-return false
-end end end
-end,nil)
+Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙لا يمكن تنزيل المالك الاساسي', 1, 'md')
+else
 DevAbs:srem(DevProx..'Abs:AbsConstructor:'..msg.chat_id_,result.id_)
 ReplyStatus(msg,result.id_,"Reply","⌁︙تم تنزيله من المالكين")  
+end end end
+end,nil)
 else 
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙*المعرف غير صحيح*', 1, 'md')
 end end 
@@ -4533,12 +4533,12 @@ local admins = data.members_
 for i=0 , #admins do
 if data.members_[i].status_.ID == "ChatMemberStatusCreator" then
 if tonumber(user) == tonumber(admins[i].user_id_) then  
-ReplyStatus(msg,user,"Reply","⌁︙لا يمكن تنزيل المالك الاساسي") 
-return false
-end end end
-end,nil)
+Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙لا يمكن تنزيل المالك الاساسي', 1, 'md')
+else
 DevAbs:srem(DevProx..'Abs:AbsConstructor:'..msg.chat_id_,user)
 ReplyStatus(msg,user,"Reply","⌁︙تم تنزيله من المالكين")  
+end end end
+end,nil)
 end end
 --     Source DevProx     --
 --  Set BasicConstructor  --
