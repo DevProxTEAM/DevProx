@@ -1,4 +1,4 @@
-# <p align="center" > تنصيب سورس ديف بروكس
+# <p align="center" > تنصيب سورس بروكس
 # <p align="center" > ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉
 # <p align="center" > ⤈ ↫ كود التنصيب الاول مع المكاتب ↬ ⤈
 # <p align="center" > `git clone https://github.com/DevProxTEAM/DevProx.git;cd DevProx;chmod +x DevProx.sh;./DevProx.sh install`
