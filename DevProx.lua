@@ -8041,16 +8041,23 @@ local txt = {string.match(text, "^(كول) (.*)$")}
 Dev_Abs(msg.chat_id_,0, 1, txt[2], 1, 'md')
 DeleteMessage(msg.chat_id_,{[0] = msg.id_})
 end
-if text and text:match("^انطق (.*)$") then
+if text == "تفعيل انطق" and Manager(msg) and ChCheck(msg) then
+local DevProxTEAM = '⌁︙اهلا عزيزي ↫ '..AbsRank(msg)..' \n⌁︙تم تفعيل ميزة انطق'
+absmoned(msg.chat_id_, msg.sender_user_id_, msg.id_, DevProxTEAM, 14, string.len(msg.sender_user_id_))
+DevAbs:del(DevProx..'Abs:Antk:Abs'..msg.chat_id_) 
+end
+if text == "تعطيل انطق" and Manager(msg) and ChCheck(msg) then
+local DevProxTEAM = '⌁︙اهلا عزيزي ↫ '..AbsRank(msg)..' \n⌁︙تم تعطيل ميزة انطق'
+absmoned(msg.chat_id_, msg.sender_user_id_, msg.id_, DevProxTEAM, 14, string.len(msg.sender_user_id_))
+DevAbs:set(DevProx..'Abs:Antk:Abs'..msg.chat_id_,true)  
+end
+if text and text:match("^انطق (.*)$") and not DevAbs:get(DevProx..'Abs:Antk:Abs'..msg.chat_id_) then
 local UrlAntk = https.request('https://apiabs.ml/Antk.php?abs='..URL.escape(text:match("^انطق (.*)$")))
 Antk = JSON.decode(UrlAntk)
 if UrlAntk.ok ~= false then
-keyboard = {} 
-keyboard.inline_keyboard = {
-{{text = '⌁ DevProx TeAM .',url="t.me/Dev_Prox"}},
-}
-local msg_id = msg.id_/2097152/0.5
-https.request("https://api.telegram.org/bot"..TokenBot..'/sendAudio?chat_id='..msg.chat_id_..'&audio='..URL.escape(Antk.result.link).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
+download_to_file("https://translate"..Antk.result.google..Antk.result.code.."UTF-8"..Antk.result.utf..Antk.result.translate.."&tl=ar-IN",Antk.result.translate..'.mp3') 
+sendAudio(msg.chat_id_, msg.id_, 0, 1,nil, './'..Antk.result.translate..'.mp3')  
+os.execute('rm -rf ./'..Antk.result.translate..'.mp3') 
 end
 end
 --     Source DevProx     --
@@ -9517,7 +9524,7 @@ local text =  [[
 ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉
 ⌁︙تفعيل • تعطيل + الامر ↫ ⤈
 ⌁︙اطردني • الايدي بالصوره • الابراج
-⌁︙معاني الاسماء • اوامر النسب
+⌁︙معاني الاسماء • اوامر النسب • انطق
 ⌁︙الايدي • تحويل الصيغ • اوامر التحشيش
 ⌁︙ردود المدير • ردود المطور • التحقق
 ⌁︙ضافني • حساب العمر • الزخرفه
@@ -9712,6 +9719,7 @@ local text =  [[
 ⌁︙صلاحياته ↫ بالرد • بالمعرف • بالايدي
 ⌁︙ايدي • كشف  ↫ بالرد • بالمعرف • بالايدي
 ⌁︙تحويل + بالرد ↫ صوره • ملصق • صوت • بصمه
+⌁︙انطق + الكلام تدعم جميع اللغات مع الترجمه للعربي
 ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉
 ⌁︙[Source Channel](https://t.me/Dev_Prox)
 ]]
