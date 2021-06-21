@@ -1272,7 +1272,7 @@ end
 if ChatType == 'pv' then 
 if text == '/start' or text == 'رجوع ،🔙‘' then 
 if SecondSudo(msg) then 
-local Sudo_Welcome = '⌁︙مرحبا عزيزي المطور \n⌁︙انت المطور الاساسي هنا \n⌁︙اليك ازرار سورس ديف بروكس \n⌁︙تستطيع التحكم بكل الاوامر فقط اضغط على الامر الذي تريد تنفيذه'
+local Sudo_Welcome = '⌁︙مرحبا عزيزي المطور \n⌁︙انت المطور الاساسي هنا \n⌁︙اليك ازرار سورس بروكس \n⌁︙تستطيع التحكم بكل الاوامر فقط اضغط على الامر الذي تريد تنفيذه'
 local key = {
 {'وضع اسم البوت','↫ تحديث ⌁','وضع كليشه المطور'},
 {'↫ المطورين ⌁','↫ الاحصائيات ⌁'},
@@ -1300,7 +1300,7 @@ return false
 end end
 if text == '~ تعيين كلايش الاوامر ~' then 
 if SecondSudo(msg) then 
-local Sudo_Welcome = '⌁︙اهلا بك مجددا عزيزي المطور \n⌁︙اليك الازرار الخاصه بتعديل وتغيير كلايش سورس ديف بروكس فقط اضغط على الامر الذي تريد تنفيذه'
+local Sudo_Welcome = '⌁︙اهلا بك مجددا عزيزي المطور \n⌁︙اليك الازرار الخاصه بتعديل وتغيير كلايش سورس بروكس فقط اضغط على الامر الذي تريد تنفيذه'
 local key = {
 {'حذف كليشة الايدي','تعيين كليشة الايدي'},
 {'تعيين امر الاوامر'},
@@ -3608,7 +3608,7 @@ end
 end
 --     Source DevProx     --
 if text == "تعيين قناة الاشتراك" or text == "تغيير قناة الاشتراك" or text == "تعيين الاشتراك الاجباري" or text == "وضع قناة الاشتراك" then
-if not SecondSudo(msg) then
+if not Sudo(msg) then
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙للمطور الاساسي فقط ', 1, 'md')
 else
 DevAbs:setex(DevProx..'DevAbs4'..msg.sender_user_id_,360,true)
@@ -3617,7 +3617,7 @@ end
 return false  
 end
 if text == "تفعيل الاشتراك الاجباري" then  
-if not SecondSudo(msg) then
+if not Sudo(msg) then
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙للمطور الاساسي فقط ', 1, 'md')
 else
 if DevAbs:get(DevProx..'DevAbs2') then
@@ -3631,7 +3631,7 @@ end
 return false  
 end
 if text == "تعطيل الاشتراك الاجباري" then  
-if not SecondSudo(msg) then
+if not Sudo(msg) then
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙للمطور الاساسي فقط ', 1, 'md')
 else
 DevAbs:del(DevProx..'DevAbs2') DevAbs:del(DevProx..'DevAbs3')
@@ -3641,7 +3641,7 @@ end
 return false  
 end
 if text == "حذف قناة الاشتراك" or text == "حذف قناه الاشتراك" then
-if not SecondSudo(msg) then
+if not Sudo(msg) then
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙للمطور الاساسي فقط ', 1, 'md')
 else
 DevAbs:del(DevProx..'DevAbs2') DevAbs:del(DevProx..'DevAbs3')
@@ -8622,7 +8622,7 @@ Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙تم وضع عدد الاعضاء ↫ *
 end
 --     Source DevProx     --
 if text == 'تفعيل البوت الخدمي' then 
-if not SecondSudo(msg) then
+if not Sudo(msg) then
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙للمطور الاساسي فقط', 1, 'md')
 else 
 local DevProxTEAM = '⌁︙اهلا عزيزي ↫ '..AbsRank(msg)..' \n⌁︙تم تفعيل البوت الخدمي'
@@ -8631,7 +8631,7 @@ DevAbs:del(DevProx..'Abs:Lock:FreeBot'..DevProx)
 end 
 end
 if text == 'تعطيل البوت الخدمي' then 
-if not SecondSudo(msg) then
+if not Sudo(msg) then
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙للمطور الاساسي فقط', 1, 'md')
 else 
 local DevProxTEAM = '⌁︙اهلا عزيزي ↫ '..AbsRank(msg)..' \n⌁︙تم تعطيل البوت الخدمي'
@@ -8820,15 +8820,14 @@ end,nil)
 end
 --     Source DevProx     --
 if text == 'جلب نسخه السورس' then
-if not SecondSudo(msg) then
+if not Sudo(msg) then
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙للمطور الاساسي فقط ', 1, 'md')
 else
-sendDocument(DevId, 0, 0, 1, nil, './DevProx.lua', dl_cb, nil)
-Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙عزيزي المطور تم ارسال نسخة ملف السورس الى الخاص', 1, 'md')
+sendDocument(msg.chat_id_, msg.id_, 0, 1, nil, './DevProx.lua', '⌁︙نسخة ملف سورس بروكس',dl_cb, nil)
 end end
 --     Source DevProx     --
 if text == 'روابط الكروبات' or text == 'روابط المجموعات' then
-if not SecondSudo(msg) then
+if not Sudo(msg) then
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙للمطور الاساسي فقط ', 1, 'md')
 else
 local List = DevAbs:smembers(DevProx.."Abs:Groups")
@@ -9712,7 +9711,7 @@ end
 --     Source DevProx     --
 if SecondSudo(msg) then
 if text == "تحديث السورس" or text == "تحديث سورس" then 
-Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙جاري تحديث سورس ديف بروكس', 1, 'md') 
+Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙جاري تحديث سورس بروكس', 1, 'md') 
 os.execute('rm -rf DevProx.lua') 
 os.execute('wget https://raw.githubusercontent.com/DevProxTEAM/DevProx/master/DevProx.lua') 
 dofile('DevProx.lua') 
