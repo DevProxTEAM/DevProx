@@ -1,4 +1,4 @@
-﻿------------------------------------------------
+------------------------------------------------
 -- This Source Was Developed By (ABS) @IQ_ABS.--
 --   This Is The Source Channel @Dev_Prox .   --
 --                - DevProx -                 --
@@ -2066,11 +2066,6 @@ else
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙لا تستطيع تفعيل هذه المجموعه بسبب تعطيل البوت الخدمي من قبل المطور الاساسي', 1, 'md') 
 end 
 end 
---     Source DevProx     --
-if msg.date_ and msg.date_ < tonumber(os.time() - 30) then
-print("*( OLD MESSAGE )*")
-return false
-end
 --     Source DevProx     --
 tdcli_function({ID = "GetUser",user_id_ = msg.sender_user_id_},function(arg,data) 
 if data.username_ ~= false then
