@@ -1069,7 +1069,6 @@ local Text = [[
 ⌁︙قفل • فتح ↫ التكرار
 ⌁︙قفل • فتح ↫ الهاشتاك
 ⌁︙قفل • فتح ↫ التعديل
-⌁︙قفل • فتح ↫ الاباحي
 ⌁︙قفل • فتح ↫ التثبيت
 ⌁︙قفل • فتح ↫ الاشعارات
 ⌁︙قفل • فتح ↫ الكلايش
@@ -1222,7 +1221,7 @@ local Text = [[
 ⌁︙معاني الاسماء • اوامر النسب • انطق
 ⌁︙الايدي • تحويل الصيغ • اوامر التحشيش
 ⌁︙ردود المدير • ردود المطور • التحقق
-⌁︙ضافني • حساب العمر • الزخرفه
+⌁︙ضافني • حساب العمر • الزخرفه • غنيلي
 ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉
 ⌁︙[Source Channel](https://t.me/Dev_Prox)
 ]]
@@ -2067,6 +2066,11 @@ Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙لا تستطيع تفعيل هذه ا�
 end 
 end 
 --     Source DevProx     --
+if msg.date_ and msg.date_ < tonumber(os.time() - 30) then
+print("*( OLD MESSAGE )*")
+return false
+end
+--     Source DevProx     --
 tdcli_function({ID = "GetUser",user_id_ = msg.sender_user_id_},function(arg,data) 
 if data.username_ ~= false then
 DevAbs:set(DevProx..'Save:UserName'..msg.sender_user_id_,data.username_)
@@ -2130,40 +2134,6 @@ ReplyStatus(msg,msg.sender_user_id_,"WrongWay","⌁︙الملصق الذي ار
 DeleteMessage(msg.chat_id_,{[0] = msg.id_})
 return false   
 end
-end
-end
-end
-if msg.content_.ID == "MessagePhoto" or msg.content_.ID == "MessageSticker" then
-if DevAbs:get(DevProx..'Abs:Lock:NightClub'..msg.chat_id_) and msg.reply_to_message_id_ == 0 then
-if msg.content_.ID == "MessagePhoto" then Media = 'صوره اباحيه' UrlId = msg.content_.photo_.sizes_[1].photo_.persistent_id_
-elseif msg.content_.ID == "MessageSticker" then Media = 'ملصق اباحي' UrlId = msg.content_.sticker_.sticker_.persistent_id_
-end
-HttpsMsg = https.request('https://apiabs.ml/nightclub.php?Get=DevProx&TokenBot='..TokenBot..'&Url='..UrlId)
-EndMsg = JSON.decode(HttpsMsg)
-if EndMsg.Result.Info == "Indecent" then
-DeleteMessage(msg.chat_id_,{[0] = msg.id_})
-tdcli_function ({ID = "GetUser",user_id_ = msg.sender_user_id_},function(arg,dp) 
-local absname = '⌁︙العضو ↫ ['..dp.first_name_..'](tg://user?id='..dp.id_..')'
-local absid = '⌁︙ايديه ↫ `'..dp.id_..'`'
-local abstext = '⌁︙قام بنشر '..Media
-local abstxt = '┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉\n⌁︙تعالو يامشرفين اكو مخرب'
-tdcli_function ({ID = "GetChannelMembers",channel_id_ = msg.chat_id_:gsub("-100",""),filter_ = {ID = "ChannelMembersAdministrators"},offset_ = 0,limit_ = 100},function(arg,abbas) 
-local admins = abbas.members_  
-text = '\n┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉\n'
-for i=0 , #admins do 
-if not abbas.members_[i].bot_info_ then
-tdcli_function ({ID = "GetUser",user_id_ = admins[i].user_id_},function(arg,data) 
-if data.first_name_ ~= false then
-text = text.."~ [@"..data.username_.."]\n"
-end
-if #admins == i then 
-SendText(msg.chat_id_, absname..'\n'..absid..'\n'..abstext..text..abstxt,0,'md') 
-end
-end,nil)
-end
-end
-end,nil)
-end,nil)
 end
 end
 end
@@ -7214,14 +7184,6 @@ if ChatType == 'sp' or ChatType == 'gp'  then
 if Admin(msg) then
 if text and text:match("^قفل (.*)$") then
 local LockText = {string.match(text, "^(قفل) (.*)$")}
-if LockText[2] == "الاباحي" then
-if not DevAbs:get(DevProx..'Abs:Lock:NightClub'..msg.chat_id_) then
-ReplyStatus(msg,msg.sender_user_id_,"ReplyBy","⌁︙تم قفل الاباحي")  
-DevAbs:set(DevProx..'Abs:Lock:NightClub'..msg.chat_id_,true)
-else
-Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙الاباحي بالفعل مقفل في المجموعه', 1, 'md')
-end
-end
 if LockText[2] == "التعديل" then
 if not DevAbs:get(DevProx..'Abs:Lock:EditMsgs'..msg.chat_id_) then
 ReplyStatus(msg,msg.sender_user_id_,"ReplyBy","⌁︙تم قفل التعديل")  
@@ -7676,14 +7638,6 @@ if ChatType == 'sp' or ChatType == 'gp'  then
 if Admin(msg) then
 if text and text:match("^فتح (.*)$") then
 local UnLockText = {string.match(text, "^(فتح) (.*)$")}
-if UnLockText[2] == "الاباحي" then
-if DevAbs:get(DevProx..'Abs:Lock:NightClub'..msg.chat_id_) then
-ReplyStatus(msg,msg.sender_user_id_,"ReplyBy","⌁︙تم فتح الاباحي")  
-DevAbs:del(DevProx..'Abs:Lock:NightClub'..msg.chat_id_)
-else
-Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙الاباحي بالفعل مفتوح في المجموعه', 1, 'md')
-end
-end
 if UnLockText[2] == "التعديل" then
 if DevAbs:get(DevProx..'Abs:Lock:EditMsgs'..msg.chat_id_) then
 ReplyStatus(msg,msg.sender_user_id_,"ReplyBy","⌁︙تم فتح التعديل")  
@@ -8167,7 +8121,7 @@ if not Constructor(msg) then
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙للمنشئين فقط', 1, 'md')
 else
 DevAbs:set(DevProx..'Abs:Lock:Fshar'..msg.chat_id_,true) DevAbs:set(DevProx..'Abs:Lock:Taf'..msg.chat_id_,true) DevAbs:set(DevProx..'Abs:Lock:Kfr'..msg.chat_id_,true) DevAbs:hdel(DevProx.."Abs:Spam:Group:User"..msg.chat_id_ ,"Spam:User") 
-UnLockList ={'Abs:Lock:NightClub','Abs:Lock:EditMsgs','Abs:Lock:Text','Abs:Lock:Arabic','Abs:Lock:English','Abs:Lock:Join','Abs:Lock:Bots','Abs:Lock:Farsi','Abs:Lock:FarsiBan','Abs:Lock:TagServr','Abs:Lock:Inline','Abs:Lock:Photo','Abs:Lock:Spam','Abs:Lock:Videos','Abs:Lock:Gifs','Abs:Lock:Music','Abs:Lock:Voice','Abs:Lock:Links','Abs:Lock:Location','Abs:Lock:Tags','Abs:Lock:Stickers','Abs:Lock:Markdown','Abs:Lock:Forwards','Abs:Lock:Document','Abs:Lock:Contact','Abs:Lock:Hashtak','Abs:Lock:WebLinks'}
+UnLockList ={'Abs:Lock:EditMsgs','Abs:Lock:Text','Abs:Lock:Arabic','Abs:Lock:English','Abs:Lock:Join','Abs:Lock:Bots','Abs:Lock:Farsi','Abs:Lock:FarsiBan','Abs:Lock:TagServr','Abs:Lock:Inline','Abs:Lock:Photo','Abs:Lock:Spam','Abs:Lock:Videos','Abs:Lock:Gifs','Abs:Lock:Music','Abs:Lock:Voice','Abs:Lock:Links','Abs:Lock:Location','Abs:Lock:Tags','Abs:Lock:Stickers','Abs:Lock:Markdown','Abs:Lock:Forwards','Abs:Lock:Document','Abs:Lock:Contact','Abs:Lock:Hashtak','Abs:Lock:WebLinks'}
 for i,UnLock in pairs(UnLockList) do
 DevAbs:del(DevProx..UnLock..msg.chat_id_)
 end
@@ -8509,7 +8463,6 @@ if DevAbs:get(DevProx..'Abs:Lock:Music'..msg.chat_id_) then mute_music = 'مقف
 if DevAbs:get(DevProx..'Abs:Lock:Inline'..msg.chat_id_) then mute_in = 'مقفله' else mute_in = 'مفتوحه' end
 if DevAbs:get(DevProx..'Abs:Lock:Voice'..msg.chat_id_) then mute_voice = 'مقفله' else mute_voice = 'مفتوحه' end
 if DevAbs:get(DevProx..'Abs:Lock:EditMsgs'..msg.chat_id_) then mute_edit = 'مقفله' else mute_edit = 'مفتوحه' end
-if DevAbs:get(DevProx..'Abs:Lock:NightClub'..msg.chat_id_) then mute_nightclub = 'مقفل' else mute_nightclub = 'مفتوح' end
 if DevAbs:get(DevProx..'Abs:Lock:Links'..msg.chat_id_) then mute_links = 'مقفله' else mute_links = 'مفتوحه' end
 if DevAbs:get(DevProx..'Abs:Lock:Pin'..msg.chat_id_) then lock_pin = 'مقفله' else lock_pin = 'مفتوحه' end
 if DevAbs:get(DevProx..'Abs:Lock:Stickers'..msg.chat_id_) then lock_sticker = 'مقفله' else lock_sticker = 'مفتوحه' end
@@ -8551,7 +8504,6 @@ local TXTE = "⌁︙اعدادات المجموعه ↫ ⤈\n┉ ≈ ┉ ≈ ┉
 .."⌁︙الماركداون ↫ "..markdown.."\n"
 .."⌁︙الهاشتاك ↫ "..lock_htag.."\n"
 .."⌁︙التعديل ↫ "..mute_edit.."\n"
-.."⌁︙الاباحي ↫ "..mute_nightclub.."\n"
 .."⌁︙التثبيت ↫ "..lock_pin.."\n"
 .."⌁︙الاشعارات ↫ "..lock_tgservice.."\n"
 .."⌁︙الكلايش ↫ "..lock_spam.."\n"
@@ -8834,7 +8786,17 @@ Dev_Abs(msg.chat_id_, msg.id_, 1, t, 1, 'html')
 end
 end
 --     Source DevProx     --
-if text == "غنيلي" and ChCheck(msg) then
+if text == "تفعيل غنيلي" and Manager(msg) and ChCheck(msg) then
+local DevProxTEAM = '⌁︙اهلا عزيزي ↫ '..AbsRank(msg)..' \n⌁︙تم تفعيل غنيلي'
+absmoned(msg.chat_id_, msg.sender_user_id_, msg.id_, DevProxTEAM, 14, string.len(msg.sender_user_id_))
+DevAbs:del(DevProx..'Abs:Audios:Abs'..msg.chat_id_) 
+end
+if text == "تعطيل غنيلي" and Manager(msg) and ChCheck(msg) then
+local DevProxTEAM = '⌁︙اهلا عزيزي ↫ '..AbsRank(msg)..' \n⌁︙تم تعطيل غنيلي'
+absmoned(msg.chat_id_, msg.sender_user_id_, msg.id_, DevProxTEAM, 14, string.len(msg.sender_user_id_))
+DevAbs:set(DevProx..'Abs:Audios:Abs'..msg.chat_id_,true)  
+end
+if text == "غنيلي" and not DevAbs:get(DevProx..'Abs:Audios:Abs'..msg.chat_id_) and ChCheck(msg) then
 data,res = https.request('https://apiabs.ml/Audios.php')
 if res == 200 then
 Audios = json:decode(data)
@@ -10009,7 +9971,6 @@ local Text = [[
 ⌁︙قفل • فتح ↫ التكرار
 ⌁︙قفل • فتح ↫ الهاشتاك
 ⌁︙قفل • فتح ↫ التعديل
-⌁︙قفل • فتح ↫ الاباحي
 ⌁︙قفل • فتح ↫ التثبيت
 ⌁︙قفل • فتح ↫ الاشعارات
 ⌁︙قفل • فتح ↫ الكلايش
@@ -10174,7 +10135,7 @@ local Text = [[
 ⌁︙معاني الاسماء • اوامر النسب • انطق
 ⌁︙الايدي • تحويل الصيغ • اوامر التحشيش
 ⌁︙ردود المدير • ردود المطور • التحقق
-⌁︙ضافني • حساب العمر • الزخرفه
+⌁︙ضافني • حساب العمر • الزخرفه • غنيلي
 ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉
 ⌁︙[Source Channel](https://t.me/Dev_Prox)
 ]]
