@@ -2667,7 +2667,7 @@ function get_welcome(extra,result,success)
 if DevAbs:get(DevProx..'Abs:Groups:Welcomes'..msg.chat_id_) then
 Welcomes = DevAbs:get(DevProx..'Abs:Groups:Welcomes'..msg.chat_id_)
 else
-Welcomes = '• نورت حبي \n• firstname \n• @username'
+Welcomes = '• نورت حبي \n• firstname \n• username'
 end
 local Welcomes = Welcomes:gsub('"',"") Welcomes = Welcomes:gsub("'","") Welcomes = Welcomes:gsub(",","") Welcomes = Welcomes:gsub("*","") Welcomes = Welcomes:gsub(";","") Welcomes = Welcomes:gsub("`","") Welcomes = Welcomes:gsub("{","") Welcomes = Welcomes:gsub("}","") 
 local Welcomes = Welcomes:gsub('firstname',('['..result.first_name_..']' or ''))
@@ -2715,7 +2715,7 @@ if DevAbs:get(DevProx.."Abs:Lock:Welcome"..msg.chat_id_) then
 if DevAbs:get(DevProx..'Abs:Groups:Welcomes'..msg.chat_id_) then
 Welcomes = DevAbs:get(DevProx..'Abs:Groups:Welcomes'..msg.chat_id_)
 else
-Welcomes = '• نورت حبي \n• firstname \n• @username'
+Welcomes = '• نورت حبي \n• firstname \n• username'
 end
 local Welcomes = Welcomes:gsub('"',"") Welcomes = Welcomes:gsub("'","") Welcomes = Welcomes:gsub(",","") Welcomes = Welcomes:gsub("*","") Welcomes = Welcomes:gsub(";","") Welcomes = Welcomes:gsub("`","") Welcomes = Welcomes:gsub("{","") Welcomes = Welcomes:gsub("}","") 
 local Welcomes = Welcomes:gsub('firstname',('['..msg.content_.members_[0].first_name_..']' or ''))
