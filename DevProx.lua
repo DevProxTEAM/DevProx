@@ -14,6 +14,7 @@ HTTPS   = require("ssl.https")
 https   = require("ssl.https") 
 User    = io.popen("whoami"):read('*a'):gsub('[\n\r]+', '')
 Server  = io.popen("echo $SSH_CLIENT | awk '{ print $1}'"):read('*a') 
+DirName = io.popen("echo $(cd $(dirname $0); pwd)"):read('*a'):gsub('[\n\r]+', '')
 Ip      = io.popen("dig +short myip.opendns.com @resolver1.opendns.com"):read('*a'):gsub('[\n\r]+', '')
 Name    = io.popen("uname -a | awk '{ name = $2 } END { print name }'"):read('*a'):gsub('[\n\r]+', '')
 Port    = io.popen("echo ${SSH_CLIENT} | awk '{ port = $3 } END { print port }'"):read('*a'):gsub('[\n\r]+', '')
@@ -118,7 +119,7 @@ local config = loadfile("./config.lua")()
 return config 
 end  
 Load_DevProx() 
-print("\27[36m"..[[                                           
+print("\27[36m"..[[ 
 ---------------------------------------------
 |    ____             ____                  |
 |   |  _ \  _____   _|  _ \ _ __ _____  __  |
@@ -4102,7 +4103,7 @@ end
 end
 --     Source DevProx     --
 if text == "تعيين قناة الاشتراك" or text == "تغيير قناة الاشتراك" or text == "تعيين الاشتراك الاجباري" or text == "وضع قناة الاشتراك" then
-if not Sudo(msg) then
+if not SecondSudo(msg) then
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙للمطور الاساسي فقط ', 1, 'md')
 else
 DevAbs:setex(DevProx..'DevAbs4'..msg.sender_user_id_,360,true)
@@ -4111,7 +4112,7 @@ end
 return false  
 end
 if text == "تفعيل الاشتراك الاجباري" then  
-if not Sudo(msg) then
+if not SecondSudo(msg) then
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙للمطور الاساسي فقط ', 1, 'md')
 else
 if DevAbs:get(DevProx..'Abs:ChId') then
@@ -4126,7 +4127,7 @@ end
 return false  
 end
 if text == "تعطيل الاشتراك الاجباري" then  
-if not Sudo(msg) then
+if not SecondSudo(msg) then
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙للمطور الاساسي فقط ', 1, 'md')
 else
 DevAbs:del(DevProx..'Abs:ChId')
@@ -4136,7 +4137,7 @@ end
 return false  
 end
 if text == "حذف قناة الاشتراك" or text == "حذف قناه الاشتراك" then
-if not Sudo(msg) then
+if not SecondSudo(msg) then
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙للمطور الاساسي فقط ', 1, 'md')
 else
 DevAbs:del(DevProx..'Abs:ChId')
@@ -8802,12 +8803,12 @@ end
 end
 --     Source DevProx     --
 if text == "تفعيل غنيلي" and Manager(msg) and ChCheck(msg) then
-local DevProxTEAM = '⌁︙اهلا عزيزي ↫ '..AbsRank(msg)..' \n⌁︙تم تفعيل غنيلي'
+local DevProxTEAM = '⌁︙اهلا عزيزي ↫ '..AbsRank(msg)..' \n⌁︙تم تفعيل غنيلي بنجاح'
 absmoned(msg.chat_id_, msg.sender_user_id_, msg.id_, DevProxTEAM, 14, string.len(msg.sender_user_id_))
 DevAbs:del(DevProx..'Abs:Audios:Abs'..msg.chat_id_) 
 end
 if text == "تعطيل غنيلي" and Manager(msg) and ChCheck(msg) then
-local DevProxTEAM = '⌁︙اهلا عزيزي ↫ '..AbsRank(msg)..' \n⌁︙تم تعطيل غنيلي'
+local DevProxTEAM = '⌁︙اهلا عزيزي ↫ '..AbsRank(msg)..' \n⌁︙تم تعطيل غنيلي بنجاح'
 absmoned(msg.chat_id_, msg.sender_user_id_, msg.id_, DevProxTEAM, 14, string.len(msg.sender_user_id_))
 DevAbs:set(DevProx..'Abs:Audios:Abs'..msg.chat_id_,true)  
 end
@@ -9356,7 +9357,7 @@ sendDocument(msg.chat_id_, msg.id_, 0, 1, nil, './DevProx.lua', '⌁︙نسخة 
 end end
 --     Source DevProx     --
 if text == 'روابط الكروبات' or text == 'روابط المجموعات' then
-if not Sudo(msg) then
+if not SecondSudo(msg) then
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙للمطور الاساسي فقط ', 1, 'md')
 else
 local List = DevAbs:smembers(DevProx.."Abs:Groups")
@@ -10366,14 +10367,6 @@ io.popen("rm -rf ../.telegram-cli/*")
 print("\27[31;47m\n        ( تم تحديث ملفات البوت )        \n\27[0;34;49m\n") 
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙تم تحديث ملفات البوت", 1, "md")
 end 
-if DevAbs:get(DevProx.."DevAbs2") then
-DevAbs:set(DevProx.."Abs:ChId",DevAbs:get(DevProx.."DevAbs2"))
-DevAbs:del(DevProx.."DevAbs2")
-end
-if DevAbs:get(DevProx.."Abs:textch:user") then
-DevAbs:set(DevProx.."Abs:ChText",DevAbs:get(DevProx.."Abs:textch:user"))
-DevAbs:del(DevProx.."Abs:textch:user")
-end
 --     Source DevProx     --
 if text == 'الملفات' then
 Files = '\n⌁︙الملفات المفعله في البوت ↫ ⤈ \n┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉\n'
@@ -10563,8 +10556,10 @@ if text == 'القناة' or text == 'قناة السورس' or text == 'قنا�
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙Channel ↬ [@Dev_Prox]', 1, 'md')    
 end 
 --     Source DevProx     --
-if Sudo(msg) then 
 if text == 'معلومات السيرفر' or text == 'السيرفر' then 
+if not Sudo(msg) then
+Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙للمطور الاساسي فقط ', 1, 'md')
+else
 Dev_Abs(msg.chat_id_, msg.id_, 1, io.popen([[
 LinuxVersion=`lsb_release -ds`
 MemoryUsage=`free -m | awk 'NR==2{printf "%s/%sMB {%.2f%%}\n", $3,$2,$3*100/$2 }'`
