@@ -479,10 +479,6 @@ username_ = username
 }, cb, nil)
 end
 --     Source DevProx     --
-function changeChatMemberStatus(chat_id, user_id, status)
-tdcli_function ({ ID = "ChangeChatMemberStatus", chat_id_ = chat_id, user_id_ = user_id, status_ = { ID = "ChatMemberStatus" .. status }, }, dl_cb, nil)
-end
---     Source DevProx     --
 function getInputFile(file)
 if file:match('/') then
 infile = {ID = "InputFileLocal", path_ = file}
@@ -508,11 +504,11 @@ return chat
 end
 --     Source DevProx     --
 function ChatLeave(chat_id, user_id)
-changeChatMemberStatus(chat_id, user_id, "Left")
+tdcli_function ({ ID = "ChangeChatMemberStatus", chat_id_ = chat_id, user_id_ = user_id, status_ = { ID = "ChatMemberStatusLeft" }, }, dl_cb, nil)
 end
 --     Source DevProx     --
 function ChatKick(chat_id, user_id)
-changeChatMemberStatus(chat_id, user_id, "Kicked")
+tdcli_function ({ ID = "ChangeChatMemberStatus", chat_id_ = chat_id, user_id_ = user_id, status_ = { ID = "ChatMemberStatusKicked" }, }, dl_cb, nil)
 end
 --     Source DevProx     --
 function getParseMode(parse_mode)
@@ -7530,7 +7526,7 @@ for i = 1, #group do
 tdcli_function({ID='GetChat',chat_id_ = group[i]},function(arg,data)
 if data and data.type_ and data.type_.channel_ and data.type_.channel_.status_ and data.type_.channel_.status_.ID == "ChatMemberStatusMember" then
 DevAbs:srem(DevProx.."Abs:Groups",group[i]) 
-changeChatMemberStatus(group[i], DevProx, "Left")
+tdcli_function ({ ID = "ChangeChatMemberStatus", chat_id_ = group[i], user_id_ = DevProx, status_ = { ID = "ChatMemberStatusLeft" }, }, dl_cb, nil)
 w = w + 1
 end
 if data and data.type_ and data.type_.channel_ and data.type_.channel_.status_ and data.type_.channel_.status_.ID == "ChatMemberStatusLeft" then
@@ -9068,7 +9064,7 @@ DevAbs:del(DevProx..'Abs:Ban:'..msg.chat_id_)
 else
 local x = 0
 for x,y in pairs(result.members_) do
-changeChatMemberStatus(msg.chat_id_, y.user_id_, 'Left', dl_cb, nil)
+tdcli_function ({ ID = "ChangeChatMemberStatus", chat_id_ = msg.chat_id_, user_id_ = y.user_id_, status_ = { ID = "ChatMemberStatusLeft" }, }, dl_cb, nil)
 DevAbs:del(DevProx..'Abs:Ban:'..msg.chat_id_)
 x = x + 1
 end
