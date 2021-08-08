@@ -1760,8 +1760,8 @@ return false
 end end
 if text == '/start' and ChCheck(msg) then  
 if not DevAbs:get(DevProx..'Abs:Start:Time'..msg.sender_user_id_) then
-tdcli_function({ID="GetUser",user_id_=DevId},function(arg,dp) 
-local inline = {{{text="⌁ المطور .",url="t.me/"..(dp.username_ or "Dev_Prox")}}}
+tdcli_function({ID="GetUser",user_id_=DevProx},function(arg,dp) 
+local inline = {{{text="⌁ اضفني في مجموعتك ⌁",url="t.me/"..dp.username_.."?startgroup=botstart"}}}
 local start = DevAbs:get(DevProx.."Abs:Start:Bot")
 if start then 
 Start_Source = start
