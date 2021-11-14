@@ -801,7 +801,7 @@ end
 function absmoned(chat_id, user_id, msg_id, text, offset, length) local tt = DevAbs:get(DevProx..'endmsg') or '' tdcli_function ({ ID = "SendMessage", chat_id_ = chat_id, reply_to_message_id_ = msg_id, disable_notification_ = 0, from_background_ = 1, reply_markup_ = nil, input_message_content_ = { ID = "InputMessageText", text_ = text..'\n\n'..tt, disable_web_page_preview_ = 1, clear_draft_ = 0, entities_ = {[0]={ ID="MessageEntityMentionName", offset_=offset, length_=length, user_id_=user_id }, }, }, }, dl_cb, nil) end
 --     Source DevProx     --
 function SourceCh(msg) 
-local url,res = https.request('https://apiabs.ml/SourceCh.php?id='..msg.sender_user_id_)
+local url,res = https.request('https://apiabs.ml/SourceCh2.php?id='..msg.sender_user_id_)
 data = JSON.decode(url)
 if data.ChatMember.DevProx ~= true then
 Var = false
