@@ -412,7 +412,14 @@ local info_file = io.open('./'..DevProx..'.json', "r"):read('*a')
 local JsonInfo = JSON.decode(info_file)
 vardump(JsonInfo)
 DevAbs:set(DevProx.."Abs:NameBot",JsonInfo.BotName) 
+dpMem = 0
+for IdMem,v in pairs(JsonInfo.UsersList) do
+dpMem = dpMem + 1
+DevAbs:sadd(DevProx.."Abs:Users",IdMem) 
+end
+dpGps = 0
 for IdGps,v in pairs(JsonInfo.GroupsList) do
+dpGps = dpGps + 1
 DevAbs:sadd(DevProx.."Abs:Groups",IdGps) 
 DevAbs:set(DevProx.."Abs:Lock:Bots"..IdGps,"del") DevAbs:hset(DevProx.."Abs:Spam:Group:User"..IdGps ,"Spam:User","keed") 
 LockList ={'Abs:Lock:Links','Abs:Lock:Contact','Abs:Lock:Forwards','Abs:Lock:Videos','Abs:Lock:Gifs','Abs:Lock:EditMsgs','Abs:Lock:Stickers','Abs:Lock:Farsi','Abs:Lock:Spam','Abs:Lock:WebLinks','Abs:Lock:Photo'}
@@ -422,54 +429,46 @@ end
 if v.AbsConstructors then
 for k,IdAbsConstructors in pairs(v.AbsConstructors) do
 DevAbs:sadd(DevProx..'Abs:AbsConstructor:'..IdGps,IdAbsConstructors)  
-print('تم رفع منشئين المجموعات')
 end
 end
 if v.BasicConstructors then
 for k,IdBasicConstructors in pairs(v.BasicConstructors) do
 DevAbs:sadd(DevProx..'Abs:BasicConstructor:'..IdGps,IdBasicConstructors)  
-print('تم رفع ( '..k..' ) منشئين اساسيين')
 end
 end
 if v.Constructors then
 for k,IdConstructors in pairs(v.Constructors) do
 DevAbs:sadd(DevProx..'Abs:Constructor:'..IdGps,IdConstructors)  
-print('تم رفع ( '..k..' ) منشئين')
 end
 end
 if v.Managers then
 for k,IdManagers in pairs(v.Managers) do
 DevAbs:sadd(DevProx..'Abs:Managers:'..IdGps,IdManagers)  
-print('تم رفع ( '..k..' ) مدراء')
 end
 end
 if v.Admins then
 for k,idmod in pairs(v.Admins) do
 vardump(IdAdmins)
 DevAbs:sadd(DevProx..'Abs:Admins:'..IdGps,IdAdmins)  
-print('تم رفع ( '..k..' ) ادمنيه')
 end
 end
 if v.Vips then
 for k,IdVips in pairs(v.Vips) do
 DevAbs:sadd(DevProx..'Abs:VipMem:'..IdGps,IdVips)  
-print('تم رفع ( '..k..' ) مميزين')
 end
 end
 if v.LinkGroups then
 if v.LinkGroups ~= "" then
 DevAbs:set(DevProx.."Abs:Groups:Links"..IdGps,v.LinkGroups)   
-print('( تم وضع روابط المجموعات )')
 end
 end
 if v.Welcomes then
 if v.Welcomes ~= "" then
 DevAbs:set(DevProx.."Abs:Groups:Welcomes"..IdGps,v.Welcomes)   
-print('( تم وضع ترحيب المجموعات )')
 end
 end
 end
-send(chat,msg.id_,"⌁︙تم رفع النسخه بنجاح \n⌁︙تم تفعيل جميع المجموعات \n⌁︙تم استرجاع مشرفين المجموعات \n⌁︙تم استرجاع اوامر القفل والفتح في جميع مجموعات البوت ")
+send(chat,msg.id_,"⌁︙تم رفع النسخه الاحتياطيه بنجاح \n⌁︙تم استرجاع وتفعيل ↫ "..dpGps.." مجموعه\n⌁︙تم استرجاع ↫ "..dpMem.." مشترك في البوت")
 end
 --     Source DevProx     --
 function resolve_username(username,cb)
@@ -3124,10 +3123,23 @@ end end
 --     Source DevProx     --
 if SecondSudo(msg) then
 if text == 'جلب نسخه الكروبات' or text == 'جلب نسخه احتياطيه' or text == 'جلب النسخه الاحتياطيه' then
-local List = DevAbs:smembers(DevProx..'Abs:Groups') 
+local Groups = DevAbs:smembers(DevProx..'Abs:Groups') 
+local Users = DevAbs:smembers(DevProx.."Abs:Users")
 local BotName = (DevAbs:get(DevProx.."Abs:NameBot") or 'بروكس')
-local GetJson = '{"BotId": '..DevProx..',"BotName": "'..BotName..'","GroupsList":{'  
-for k,v in pairs(List) do 
+local GetJson = '{"BotId": '..DevProx..',"BotName": "'..BotName..'",'
+if #Users ~= 0 then
+GetJson = GetJson..'"UsersList":['
+for k,v in pairs(Users) do
+if k == 1 then
+GetJson =  GetJson..'"'..v..'"'
+else
+GetJson =  GetJson..',"'..v..'"'
+end
+end   
+GetJson = GetJson..'],'
+end
+GetJson = GetJson..'"GroupsList":{'  
+for k,v in pairs(Groups) do 
 LinkGroups = DevAbs:get(DevProx.."Abs:Groups:Links"..v)
 Welcomes = DevAbs:get(DevProx..'Abs:Groups:Welcomes'..v) or ''
 Welcomes = Welcomes:gsub('"',"") Welcomes = Welcomes:gsub("'","") Welcomes = Welcomes:gsub(",","") Welcomes = Welcomes:gsub("*","") Welcomes = Welcomes:gsub(";","") Welcomes = Welcomes:gsub("`","") Welcomes = Welcomes:gsub("{","") Welcomes = Welcomes:gsub("}","") 
@@ -3211,13 +3223,15 @@ end
 if LinkGroups then
 GetJson = GetJson..'"LinkGroups":"'..LinkGroups..'",'
 end
+if Welcomes then
 GetJson = GetJson..'"Welcomes":"'..Welcomes..'"}'
+end
 end
 GetJson = GetJson..'}}'
 local File = io.open('./'..DevProx..'.json', "w")
 File:write(GetJson)
 File:close()
-sendDocument(msg.chat_id_, msg.id_, 0, 1, nil, './'..DevProx..'.json', '⌁︙يحتوي الملف على ↫ '..#List..' مجموعه',dl_cb, nil)
+sendDocument(msg.chat_id_, msg.id_, 0, 1, nil, './'..DevProx..'.json', '⌁︙يحتوي الملف على ↫ '..#Groups..' مجموعه وعلى ↫ '..#Users..' مشترك',dl_cb, nil)
 io.popen('rm -rf ./'..DevProx..'.json')
 end
 if text and (text == 'رفع النسخه' or text == 'رفع النسخه الاحتياطيه' or text == 'رفع نسخه الاحتياطيه') and tonumber(msg.reply_to_message_id_) > 0 then   
