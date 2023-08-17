@@ -24,6 +24,6 @@
 # <p align="center" > ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉
 # <p align="center" > [Source Ch](https://t.me/Dev_Prox) • [قناة السورس](https://t.me/Dev_Prox)
 # <p align="center" > [Exp Source](https://t.me/Exp_Dev) • [شروحات السورس](https://t.me/Exp_Dev)
-# <p align="center" > [Source Prog](https://t.me/IQ_ABS) • [مبرمج السورس](https://t.me/IQ_ABS)
+# <p align="center" > [Source Prog](https://t.me/IQ_ABS) • [مبرمج السورس](https://t.me/zlcom)
 # <p align="center" > [onnection Bot](https://t.me/IQA_bot) • [بوت التواصل](https://t.me/IQA_bot)
 # <p align="center" > ┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉
